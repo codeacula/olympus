@@ -1,67 +1,67 @@
-You're right, Code, that's a perfect way to make these user stories even more actionable! Since we have a detailed architectural blueprint and file structure in mind, we can definitely map these MVP user stories to the specific projects, folders, and even key files/classes that would need to be created or significantly modified.
+### Olympus MVP User Stories (with Code/File Context from Final Blueprint)
 
-This will give a very clear "slice" through the architecture for each MVP feature.
-
-Let's expand on those MVP user stories with the code/file context:
+**MVP Definition Recap:**
+*The core "ASAP AI Narrative Campaign Loop" allowing a single player to interact with an AI GM via the Discord bot for a simple, narrative-driven scenario. The AI should provide descriptive responses, manage basic conversational context (short-term memory), and use a simple chance mechanism (`SimpleChanceRoll` tool).*
 
 ---
-
-### MVP User Stories for Olympus (Expanded with Code/File Context)
 
 **User Role: Player (Interacting via Discord)**
 
 **1. Story: Initiate Narrative Interaction**
 
 * **As a** Player on Discord,
-* **I want to** send a natural language message describing my character's action or dialogue,
+* **I want to** send a natural language message (e.g., using a specific slash command like `/interact <text>`) describing my character's action or dialogue,
 * **so that** the Olympus AI Game Master can process my turn and respond with a narrative outcome.
 
 * **Code/Files Involved:**
   * **`clients/Olympus.Bot.Discord/`**
-    * `Commands/SlashCommandModules/NarrativeModule.cs` (or similar): New slash command (e.g., `/interact <text>`) definition and handler.
-    * `Commands/MessageHandlers/PlayerInputHandler.cs` (if supporting free text): Logic to parse messages in a game channel.
-    * `Services/OlympusApiHttpClient.cs`: Method to call the `/api/ai/interact` endpoint, sending `ProcessPlayerNarrativeInputCommand` data.
-    * `Services/DiscordMessageFormatter.cs`: Method to display the `NarrativeResponseDto` from the API.
+    * `Interactions/DiscordInteractionController.cs` (or Minimal API in `Program.cs`): Receives the webhook POST from Discord for slash commands.
+    * `Interactions/InteractionValidationService.cs`: (Or logic within the controller/library) Validates Discord interaction signature.
+    * `Commands/SlashCommandModules/NarrativeModule.cs`: Defines and handles the `/interact` slash command, extracts user input.
+    * `Services/OlympusApiHttpClient.cs`: Method to construct and send a request (e.g., `ProcessPlayerNarrativeApiRequest`) to the `/api/ai/interact` endpoint of `Olympus.Api`.
+    * `Services/DiscordMessageFormatter.cs`: Method to display the `NarrativeResponseDto` (containing AI GM's text) back to the Discord channel.
+    * `Program.cs`: Configures Kestrel for the webhook endpoint and registers Discord.Net's `InteractionService` to route to `NarrativeModule.cs`.
   * **`src/Olympus.Api/`**
-    * `Controllers/AiInteractionController.cs`: New POST endpoint (e.g., `/api/ai/interact`) to receive the request from the bot.
+    * `Controllers/AiInteractionController.cs`: Defines the `POST /api/ai/interact` endpoint; maps the incoming API request to `ProcessPlayerNarrativeInputCommand`.
   * **`src/Olympus.Application/`**
-    * `AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommand.cs`: Define the command record (input: `SessionId`, `PlayerId`, `PlayerInputText`).
-    * `AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommandHandler.cs`: Core logic for this story resides here.
-    * `AiDrivenFeatures/DTOs/NarrativeResponseDto.cs`: Define the response DTO (output: `GmTextOutput`).
+    * `AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommand.cs`: The MediatR command record (input: `SessionId`, `PlatformPlayerId`, `PlayerInputText`).
+    * `AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommandHandler.cs`: The handler that orchestrates this use case.
+    * `AiDrivenFeatures/DTOs/NarrativeResponseDto.cs`: The DTO record for the AI GM's textual response.
   * **`src/Olympus.Infrastructure.Ai/`**
-    * `KernelServices/SemanticKernelOrchestrator.cs`: Used by the command handler to invoke the SK function.
-    * `Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/skprompt.txt` & `config.json`: The actual prompt and its SK configuration.
+    * `KernelServices/SemanticKernelOrchestrator.cs`: Used by the command handler to invoke the Semantic Kernel function. (Implements `ISemanticKernelOrchestrator` from Application).
+    * `Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/skprompt.txt` & `config.json`: The core prompt and SK configuration for the AI GM.
 
 **2. Story: Experience Contextual AI Responses**
 
 * **As a** Player on Discord,
 * **I want** the AI GM's narrative responses to consider my previous actions and the AI's recent responses (short-term context),
-* **so that** the interaction feels coherent and conversational.
+* **so that** the interaction feels coherent and the story flows logically.
 
 * **Code/Files Involved:**
-  * **`src/Olympus.Application/Abstractions/Ai/IGameSessionNarrativeContextService.cs`**: Ensure methods like `GetContextAsync` and `UpdateContextAsync` are well-defined.
-  * **`src/Olympus.Application/Abstractions/Ai/NarrativeContext.cs` & `NarrativeExchange.cs`**: Define these record structures clearly.
+  * **`src/Olympus.Application/Abstractions/Ai/IGameSessionNarrativeContextService.cs`**: Define the interface (methods: `GetContextAsync`, `UpdateContextAsync`, `InitializeContextAsync`).
+  * **`src/Olympus.Application/Abstractions/Ai/NarrativeContext.cs` & `NarrativeExchange.cs`**: Define these record structures for holding context.
   * **`src/Olympus.Application/AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommandHandler.cs`**:
-    * Modify to call `_contextService.GetContextAsync()` before calling SK.
-    * Modify to populate `KernelArguments` with `recentHistory`.
-    * Modify to call `_contextService.UpdateContextAsync()` after receiving SK's response.
+    * Modified to call `_contextService.GetContextAsync()` before invoking SK.
+    * Populates `KernelArguments` with `recentHistory` from the fetched `NarrativeContext`.
+    * Calls `_contextService.UpdateContextAsync()` after receiving SK's response to store the new exchange.
   * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/skprompt.txt`**:
-    * Ensure the prompt includes placeholders and logic to effectively use `{{recentHistory}}`.
-  * **`src/Olympus.Infrastructure.Caching.Redis/Services/RedisGameSessionNarrativeContextService.cs`**: (Covered by Developer Story #7, but directly supports this player story).
+    * Ensure the prompt includes placeholders and iterative logic (e.g., `{{#each recentHistory}}`) to display and utilize the `recentHistory` input variable.
+  * **`src/Olympus.Infrastructure.Caching.Redis/Services/RedisNarrativeContextCache.cs`**: (Implementation for Developer Story #7, but directly supports this). Implements `IGameSessionNarrativeContextService` (or its caching backend `INarrativeContextCache`).
 
 **3. Story: Encounter Narrative Chance**
 
 * **As a** Player on Discord,
-* **I want** the AI GM to be ableable to introduce a simple element of chance for my narratively uncertain actions,
+* **I want** the AI GM to be able to introduce a simple element of chance for my narratively uncertain actions,
 * **so that** outcomes feel less predictable and can add interesting twists.
 
 * **Code/Files Involved:**
   * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/skprompt.txt`**:
-    * Modify the prompt to instruct the LLM on *when* and *how* to consider using the `SimpleChanceRoll_Evaluate` tool.
-    * Instruct the LLM on how to weave the qualitative outcome from the tool into its narrative.
-  * **`src/Olympus.Infrastructure.Ai/Plugins/CoreUtilityPlugin/NativeFunctions/SimpleChanceRoll.cs`**: (Covered by Developer Story #6, but directly supports this player story).
-  * **`src/Olympus.Infrastructure.Ai/KernelServices/KernelFactory.cs`**: Ensure the `CoreUtilityPlugin` (containing `SimpleChanceRoll`) is registered with the Kernel so the `NarrativeGmPlugin` can find its functions.
-  * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/config.json`**: Ensure `CoreUtilityPlugin` (or specifically `SimpleChanceRoll`) is allowed/listed in `feature_filters.plugins` if SK requires explicit cross-plugin calls.
+    * Update prompt to instruct the LLM on scenarios where invoking the `SimpleChanceRoll_EvaluateAsync` tool is appropriate.
+    * Guide LLM on how to incorporate the qualitative tool output (e.g., "Success") into its narrative.
+  * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/config.json`**:
+    * Ensure the `execution_settings` allow or list the `CoreUtilityPlugin` (or specifically `SimpleChanceRoll_EvaluateAsync`) if SK requires explicit cross-plugin function calling permissions in the prompt's config.
+  * **`src/Olympus.Infrastructure.Ai/Plugins/CoreUtilityPlugin/NativeFunctions/SimpleChanceRoll.cs`**: (Implementation for Developer Story #6, but directly supports this).
+  * **`src/Olympus.Infrastructure.Ai/KernelServices/KernelFactory.cs`**: Ensure `CoreUtilityPlugin` (or the class containing `SimpleChanceRoll`) is registered with the SK `Kernel`.
 
 **4. Story: Basic Session Awareness**
 
@@ -71,13 +71,12 @@ Let's expand on those MVP user stories with the code/file context:
 
 * **Code/Files Involved:**
   * **`clients/Olympus.Bot.Discord/`**
-    * `Commands/SlashCommandModules/*Module.cs` or `MessageHandlers/PlayerInputHandler.cs`: Logic to extract Discord `User.Id` and `Channel.Id` (or maintain a bot-level session concept).
-    * `Services/OlympusApiHttpClient.cs`: Ensure it passes `PlayerId` (Discord User ID for now) and a `SessionId` (could be Discord Channel ID, or a GUID generated by the bot per "session") to the API.
-  * **`src/Olympus.Domain/ValueObjects/StronglyTypedIDs/`**:
-    * Consider if `SessionId.cs` and a simple `PlatformUserId.cs` (e.g., `PlatformUserId(string platformName, string id)`) are needed as VOs for type safety, even in MVP. For "ASAP," raw strings might be used initially in DTOs/Commands and then upgraded.
-  * **`src/Olympus.Application/AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommand.cs`**: Ensure it accepts `SessionId` and `PlayerId`.
-  * **`src/Olympus.Application/Abstractions/Ai/IGameSessionNarrativeContextService.cs`**: `InitializeContextAsync` method will be key.
-  * **`src/Olympus.Application/AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommandHandler.cs`**: Call `_contextService.InitializeContextAsync()` if `GetContextAsync` returns `Option.None`. Pass static/default `sceneDescription` and `characterPersona` during initialization for MVP.
+    * `Commands/SlashCommandModules/NarrativeModule.cs` (and other modules): Logic to obtain the Discord `User.Id` and `Channel.Id` (or a bot-generated session ID) from the interaction context.
+    * `Services/OlympusApiHttpClient.cs`: Modified to include `PlatformPlayerId` (e.g., `"discord:" + user.Id`) and `SessionId` in requests to `/api/ai/interact`.
+  * **`src/Olympus.Application/AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommand.cs`**: Ensure it accepts `SessionId` (string or `SessionId` VO) and `PlatformPlayerId` (string).
+  * **`src/Olympus.Application/Abstractions/Ai/IGameSessionNarrativeContextService.cs`**: Ensure `InitializeContextAsync` method is defined.
+  * **`src/Olympus.Application/AiDrivenFeatures/Commands/ProcessPlayerNarrativeInput/ProcessPlayerNarrativeInputCommandHandler.cs`**: Logic to call `_contextService.InitializeContextAsync(command.SessionId, defaultScene, defaultPersona)` if `GetContextAsync` indicates no existing context for the session.
+  * **(Optional for MVP, but good VOs) `src/Olympus.Domain/ValueObjects/StronglyTypedIDs/`**: `SessionId.cs`, `PlatformIdentifierVO.cs` (to wrap platform name + ID).
 
 ---
 
@@ -90,33 +89,30 @@ Let's expand on those MVP user stories with the code/file context:
 * **so that** the AI can generate appropriate narrative responses.
 
 * **Code/Files Involved:**
-  * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/skprompt.txt`**: Create/refine this file with the core system message, context placeholders, and instructions for the LLM.
-  * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/config.json`**: Create/refine this file to define input variables, LLM completion settings (temperature, max tokens), and any allowed tools/plugins.
+  * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/skprompt.txt`**: Create this file with the detailed system message, context placeholders (for `sceneDescription`, `characterPersona`, `recentHistory`, `playerInput`), and instructions for the LLM on narrative style and tool usage.
+  * **`src/Olympus.Infrastructure.Ai/Plugins/NarrativeGmPlugin/GeneratePlayerTurnOutcome/config.json`**: Create this file defining input variables, OpenAI model completion settings (temperature, max tokens, etc.), and any permitted plugins/functions for SK function calling.
 
 **6. Story: Implement Basic AI Tool**
 
 * **As a** Developer,
-* **I need to** implement and register the `SimpleChanceRoll` native function as an SK tool,
+* **I need to** implement and register the `SimpleChanceRoll.EvaluateAsync` native function as a Semantic Kernel tool,
 * **so that** the `NarrativeGmPlugin` can use it.
 
 * **Code/Files Involved:**
-  * **`src/Olympus.Infrastructure.Ai/Plugins/CoreUtilityPlugin/NativeFunctions/SimpleChanceRoll.cs`**: Create this C# class and the `EvaluateAsync` method with `[KernelFunction]` and `[Description]` attributes. Implement the simple random roll logic.
-  * **`src/Olympus.Infrastructure.Ai/KernelServices/KernelFactory.cs`**: Add logic to instantiate and register the `CoreUtilityPlugin` (or `SimpleChanceRoll` class directly) with the `KernelBuilder` (e.g., `kernelBuilder.Plugins.AddFromType<SimpleChanceRoll>();`).
+  * **`src/Olympus.Infrastructure.Ai/Plugins/CoreUtilityPlugin/NativeFunctions/SimpleChanceRoll.cs`**: Create this C# class with the `EvaluateAsync` method, annotated with `[KernelFunction]` and `[Description]`. Implement the internal random roll logic returning a qualitative string.
+  * **`src/Olympus.Infrastructure.Ai/KernelServices/KernelFactory.cs`**: Modify to add the `CoreUtilityPlugin` (or the class `SimpleChanceRoll` directly) to the `KernelBuilder.Plugins` collection so SK can discover and use this native function.
 
 **7. Story: Enable Short-Term Narrative Context Persistence**
 
 * **As a** Developer,
-* **I need to** implement the `RedisGameSessionNarrativeContextService`,
+* **I need to** implement the `RedisNarrativeContextCache` (fulfilling `IGameSessionNarrativeContextService`'s caching needs),
 * **so that** the AI GM has short-term conversational memory.
 
 * **Code/Files Involved:**
-  * **`src/Olympus.Application/Abstractions/Ai/IGameSessionNarrativeContextService.cs`**: Finalize the interface definition.
-  * **`src/Olympus.Application/Abstractions/Ai/NarrativeContext.cs` & `NarrativeExchange.cs`**: Finalize these record definitions.
-  * **`src/Olympus.Infrastructure.Caching.Redis/Services/RedisGameSessionNarrativeContextService.cs`**: Implement the methods using `StackExchange.Redis` to store/retrieve data (e.g., using Redis Hashes for context fields and Lists for history, with trimming).
-  * **`src/Olympus.Infrastructure.Caching.Redis/DependencyInjection.cs`**: Register `RedisGameSessionNarrativeContextService` for `IGameSessionNarrativeContextService` and configure Redis connection.
-
----
-
-This level of detail connects each MVP user story directly to the architectural components and even specific files we've planned. It should provide a much clearer roadmap for development.
-
-Now that we've expanded these MVP user stories with their code/file context, do you feel this gives a good enough launchpad for the initial AI narrative loop? Or are there any specific files or interactions within this MVP scope you'd like to explore further before we move on to the Bot layer in more detail?
+  * **`src/Olympus.Application/Abstractions/Ai/IGameSessionNarrativeContextService.cs`**: Ensure the interface and its associated DTOs (`NarrativeContext.cs`, `NarrativeExchange.cs`) are finalized.
+  * **`src/Olympus.Infrastructure.Caching.Redis/Services/RedisNarrativeContextCache.cs`**: Create and implement this class. It will use `StackExchange.Redis` to connect to Redis and implement methods for:
+    * Storing `NarrativeContext` (e.g., `characterPersona`, `sceneDescription` in a Redis Hash).
+    * Storing `recentHistory` (e.g., as a Redis List, using `LPUSH` and `LTRIM` to maintain size).
+    * Retrieving the context.
+    * Handling initialization of context.
+  * **`src/Olympus.Infrastructure.Caching.Redis/DependencyInjection.cs`**: Add DI registration for `RedisNarrativeContextCache` as `IGameSessionNarrativeContextService` (or as the implementation for an `INarrativeContextCache` if `IGameSessionNarrativeContextService` is a higher-level service in Application that *uses* `INarrativeContextCache`). For MVP, direct implementation is fine. Configure Redis connection services.
