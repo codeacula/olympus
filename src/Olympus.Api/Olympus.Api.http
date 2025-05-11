@@ -1,0 +1,6 @@
+@Olympus.Api_HostAddress = http://localhost:5034
+
+GET {{Olympus.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
