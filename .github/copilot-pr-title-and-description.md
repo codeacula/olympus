@@ -1,85 +1,35 @@
----
-applyTo: "**/*" # Applies generally when PR generation is requested
----
+# ✨ `<type>: <concise subject>`
 
-# Olympus Pull Request Title & Description Generation Guidelines
+1. 🧠 Summary
 
-Generate PR titles and descriptions for Olympus that are clear, complete, and adhere
-to project conventions.
+   * What changed and why (1‑2 sentences).
 
-**PR Title:**
+2. 🔗 Related Issue(s)
 
-* **Format:** `type(scope): Concise imperative description`
-  * Type: `feat`, `fix`, `refactor`, `docs`, `chore`, etc.
-  * Scope (optional): `domain`, `app`, `infra-ai`, etc.
-* **Clarity:** Immediately tell what the PR is about.
-* **Brevity:** Aim for 50-70 characters.
+   * e.g. `Closes #123`, `Relates to #456`.
 
-**Examples of PR Titles:**
+3. 🗂️ Changed Files
 
-* `feat: Implement character creation endpoint and service`
-* `fix(infra-ai): Correct prompt for NPC dialogue generation`
-* `refactor(domain): Introduce Value Objects for character stats`
+   * Auto‑populate from `git diff --name-only HEAD~1..HEAD`.
 
-**PR Description (Markdown):**
+4. 📝 Implementation Details
 
-**1. Summary / Purpose:**
+   * Key classes, patterns, migrations.
 
-* Brief (1-3 sentences) overview of what the PR achieves and why.
-* State the problem solved or feature implemented.
-    *Example:* "This PR introduces the initial character creation flow, including API,
-    application service, domain aggregate, and Marten persistence. Addresses user story #XYZ."
+5. 🔍 Validation
 
-**2. Related Issue(s):**
+   * Unit tests, manual steps, tools.
 
-* Link to GitHub issues: `Closes #<issue_number>`, `Fixes #<issue_number>`,
-    `Relates to #<issue_number>`.
-    *Example:*
+6. ⚠️ Risks & Mitigations
 
-    ```markdown
-    Closes #42
-    Relates to #35
-    ```
+   * Potential failure modes, rollback.
 
-**3. Technical Explanation of Changes:**
+7. ✅ Checklist
 
-* Detailed technical breakdown of changes. Approach and key decisions.
-* Significant architectural changes or new patterns introduced.
-* Explain *how* changes address the problem/feature.
-    *Example:* "`CharactersController` has a new `POST /api/characters`. `CreateCharacterCommand`
-    is handled by `CreateCharacterCommandHandler`, using `Character` aggregate factory and
-    `ICharacterRepository`. Publishes `CharacterCreatedEvent`."
+   * [ ] Code builds
+   * [ ] Tests pass
+   * [ ] Docs updated
 
-**4. List of Key Files Changed and General Changes:**
+8. 📢 Release Note
 
-* List important files/modules affected and a high-level summary of changes in each.
-    *Example:*
-
-    ```markdown
-    * `src/Olympus.Api/Controllers/CharactersController.cs`: Added `POST /api/characters`.
-    * `src/Olympus.Application/Characters/Commands/CreateCharacterCommand.cs`: New command & handler.
-    * `src/Olympus.Domain/Aggregates/Character.cs`: Added `CreateNew(...)` factory.
-    * `src/Olympus.Infrastructure.Persistence.Marten/Repositories/MartenCharacterRepository.cs`: Implemented `AddAsync`.
-    ```
-
-**5. How to Test / Validation Steps:**
-
-* Manual testing steps, API requests (cURL, Postman), or scenarios.
-* Mention new automated tests.
-    *Example:* "POST to `/api/characters` with `{ "name": "Test", "class": "Mage" }`.
-    Verify 201 and DB entry. Unit tests for `CreateCharacterCommandHandler` added."
-
-**6. Screenshots / GIFs (If Applicable).**
-
-**7. Checklist (Reference `PULL_REQUEST_TEMPLATE.md` or include relevant items):**
-
-  ```markdown
-  - [ ] Code follows architecture and patterns
-  - [ ] No breaking changes (or documented)
-  - [ ] Manual test/validation performed
-  - [ ] New unit tests added
-  - [ ] Docs updated (if applicable)
-  ```
-
-Populate these sections based on commit history, diff, and issue information.
-Prioritize a clear technical explanation and summary of file changes.
+   * One‑line end‑user statement if relevant.

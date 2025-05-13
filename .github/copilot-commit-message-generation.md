@@ -1,85 +1,43 @@
----
-applyTo: "**/*" # Applies generally when commit message generation is requested
----
+# Commit Message Guidelines
 
-# Olympus Commit Message Generation Guidelines
-
-When generating commit messages for Olympus, follow **Conventional Commits** (v1.0.0).
-
-**Format:**
+## 1. Format
 
 ```text
 
-\<type\>[optional scope]: \<description\>
+<type>(<scope>): <subject> <BLANK>
 
-[optional body]
-
-[optional footer(s)]
-
+<body>
+<BLANK>
+<footer>
 ```
 
-**1. Header (`<type>[optional scope]: <description>`):**
+- **type**: feat, fix, perf, refactor, docs, test, chore.
+- **scope**: optional folder or bounded context (`Domain`, `ECS`, `Ai`, etc.).
+- **subject**: imperative, ≤72 chars.
 
-* **Type:** One of:
-  * `feat`: A new feature or significant functionality.
-  * `fix`: A bug fix.
-  * `build`: Changes to build system or external dependencies.
-  * `chore`: Non-src/test changes (e.g., .gitignore).
-  * `ci`: CI configuration changes.
-  * `docs`: Documentation only.
-  * `perf`: Performance improvements.
-  * `refactor`: Code change that neither fixes a bug nor adds a feature.
-  * `style`: Formatting, white-space, etc. (no code meaning change).
-  * `test`: Adding or correcting tests.
-* **Scope (Optional):** Noun describing the codebase section (e.g., `domain`, `app`,
-    `infra-ai`, `api`, `bot-discord`).
-* **Description:**
-  * Imperative, present tense (e.g., "add" not "added" or "adds").
-  * Lowercase first letter. No period at the end.
-  * Concise (under 50 chars ideally), technically descriptive of *what changed*.
-  * Example: `feat(app): add CreateCharacterCommand and handler`
-        (Not: `feat: implement character creation`)
+## 2. Body Checklist
 
-**2. Body (Optional):**
+- *What* changed and *why* (link to ADR or issue).
+- Major modules touched (`git diff --name-only`).
+- Migration guidance if any.
 
-* Imperative, present tense.
-* Explain *what* and *why* vs. *how*.
-* Motivation for change, contrast with previous behavior.
-* Wrap lines at 72 characters.
+## 3. Footers
 
-**3. Footer (Optional):**
+- Issue linkage: `Closes #123`.
+- BREAKING CHANGE: write exactly this token then describe API impact.
+- Co‑authors: `Co-Authored-By:` lines.
 
-* **Breaking Changes:** Start with `BREAKING CHANGE:` followed by a summary.
-
-    ```text
-    BREAKING CHANGE: The `ProcessNarrativeInput` command now requires `SessionId`.
-    ```
-
-* **Issue Linking:** `Closes #123`, `Relates to #456`.
-
-**Examples:**
-
-**Simple Fix:**
+## 4. Examples
 
 ```text
+feat(Application): add ProcessPlayerNarrativeInputCommand handler
 
-fix(app): ensure UserId passed to CampaignCreationService
+Adds CQRS handler to route player text into SK orchestrator.
+Handles context caching in Redis and publishes DomainEvent.
 
-Previously, a default Guid was used. This ensures the authenticated
-user's ID is properly utilized.
-
+Closes #42
 ```
-
-**New Feature with Scope:**
 
 ```text
-
-feat(domain): implement basic combat resolution in DamageResolutionService
-
-Adds methods for calculating damage considering armor and resistances.
-Does not yet include status effects or critical hits.
-
+BREAKING CHANGE: Result<T> now requires explicit Success/Failure states.
 ```
-
-Analyze staged changes for type, scope, and a concise, technical description.
-Suggest breaking large changes into smaller commits if necessary.
