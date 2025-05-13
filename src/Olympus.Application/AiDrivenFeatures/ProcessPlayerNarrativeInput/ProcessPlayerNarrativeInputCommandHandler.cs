@@ -1,3 +1,5 @@
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Olympus.Application.Ai;
 using Olympus.Application.AiDrivenFeatures.Common.DTOs;
 using Olympus.Application.Common.Types;
@@ -8,21 +10,31 @@ namespace Olympus.Application.AiDrivenFeatures.ProcessPlayerNarrativeInput;
 /// Handles the processing of player narrative input and returns an AI-generated response.
 /// </summary>
 public sealed class ProcessPlayerNarrativeInputCommandHandler
+    : IRequestHandler<ProcessPlayerNarrativeInputCommand, Result<NarrativeResponseDto, Error>>
 {
-    // Placeholder for dependencies
-    public ProcessPlayerNarrativeInputCommandHandler(
-        ISemanticKernelOrchestrator orchestrator,
-        IGameSessionNarrativeContextService contextService)
-    {
-    }
+  private readonly ISemanticKernelOrchestrator _orchestrator;
+  private readonly IGameSessionNarrativeContextService _contextService;
+  private readonly ILogger<ProcessPlayerNarrativeInputCommandHandler> _logger;
 
-    // Placeholder for handler logic
-    public ValueTask<Result<NarrativeResponseDto, Error>> Handle(
-        ProcessPlayerNarrativeInputCommand command,
-        CancellationToken cancellationToken)
-    {
-        // TODO: Implement logic
-        return new ValueTask<Result<NarrativeResponseDto, Error>>(
-            Result<NarrativeResponseDto, Error>.Failure(new Error("NotImplemented")));
-    }
+  public ProcessPlayerNarrativeInputCommandHandler(
+      ISemanticKernelOrchestrator orchestrator,
+      IGameSessionNarrativeContextService contextService,
+      ILogger<ProcessPlayerNarrativeInputCommandHandler> logger)
+  {
+    _orchestrator = orchestrator;
+    _contextService = contextService;
+    _logger = logger;
+  }
+
+  public async Task<Result<NarrativeResponseDto, Error>> Handle(
+      ProcessPlayerNarrativeInputCommand command,
+      CancellationToken cancellationToken)
+  {
+    using var _ = _logger.BeginScope("Processing narrative input for session {SessionId}", command.SessionId);
+
+    // TODO: Implement logic
+    _logger.LogInformation("Processing narrative input: {InputText}", command.InputText);
+
+    return Result<NarrativeResponseDto, Error>.Fail(new Error("NotImplemented"));
+  }
 }
