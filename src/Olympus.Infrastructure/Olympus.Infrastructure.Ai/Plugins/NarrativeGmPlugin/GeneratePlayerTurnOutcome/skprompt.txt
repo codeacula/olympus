@@ -1,0 +1,2 @@
+// Placeholder for Semantic Kernel prompt for generating player turn outcome
+// TODO: Write actual prompt content
