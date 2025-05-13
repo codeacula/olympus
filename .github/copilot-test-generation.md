@@ -1,6 +1,5 @@
 ---
-
-applyTo: "**/*Tests.cs" # Applies when generating tests, assuming a common naming convention
+applyTo: "**/*Tests.cs" # Applies when generating tests
 ---
 
 ## Olympus Test Generation Guidelines (xUnit)
@@ -8,8 +7,10 @@ applyTo: "**/*Tests.cs" # Applies when generating tests, assuming a common namin
 When generating unit tests for the Olympus project using xUnit, please adhere to the following:
 
 **1. Test Structure (AAA Pattern):**
-    *Clearly structure each test method using the Arrange, Act, and Assert (AAA) pattern.
-    * Use comments (`// Arrange`, `// Act`, `// Assert`) or blank lines to visually separate these sections.
+
+* Clearly structure each test method using the Arrange, Act, and Assert (AAA) pattern.
+* Use comments (`// Arrange`, `// Act`, `// Assert`) or blank lines to visually separate
+    these sections.
 
     ```csharp
     [Fact]
@@ -27,49 +28,57 @@ When generating unit tests for the Olympus project using xUnit, please adhere to
     ```
 
 **2. Naming Conventions:**
-    *Test methods should be clearly named to indicate what they are testing: `MethodUnderTest_Scenario_ExpectedOutcome`.
-    * Test classes should be named after the class they are testing, suffixed with `Tests` (e.g., `CharacterServiceTests`).
+
+* Test methods should be clearly named: `MethodUnderTest_Scenario_ExpectedOutcome`.
+* Test classes should be named after the class they are testing, suffixed with `Tests`
+    (e.g., `CharacterServiceTests`).
 
 **3. Single Responsibility per Test:**
-    *Each test method should verify only one specific behavior or outcome. Avoid multiple unrelated assertions in a single test.
-    * If a method has multiple distinct outcomes based on different inputs or states, create separate test methods for each.
+
+* Each test method should verify only one specific behavior or outcome.
+* If a method has multiple distinct outcomes, create separate test methods for each.
 
 **4. Assertions:**
-    *Use xUnit's assertion library (`Xunit.Assert`).
-    * Make assertions specific and clear. For example, instead of `Assert.True(result == expected)`, use `Assert.Equal(expected, result)`.
-    *When asserting on collections, use collection-specific assertions where appropriate (e.g., `Assert.Contains`, `Assert.All`).
-    * For `Result<TSuccess, TError>` types, assert on `IsSuccess` or `IsFailure` first, then assert on the `Value` or `Error` accordingly.
-        ```csharp
-        // Example for Result<T,E>
-        Assert.True(result.IsSuccess);
-        Assert.Equal(expectedValue, result.Value);
-        // or
-        Assert.True(result.IsFailure);
-        Assert.IsType<SpecificDomainError>(result.Error);
-        Assert.Equal("Expected error message", result.Error.Message);
-        ```
+
+* Use xUnit's assertion library (`Xunit.Assert`).
+* Make assertions specific and clear (e.g., `Assert.Equal(expected, result)`).
+* When asserting on collections, use collection-specific assertions (e.g., `Assert.Contains`).
+* For `Result<TSuccess, TError>` types, assert `IsSuccess` or `IsFailure`, then the `Value` or `Error`.
+
+    ```csharp
+    // Example for Result<T,E>
+    Assert.True(result.IsSuccess);
+    Assert.Equal(expectedValue, result.Value);
+    // or
+    Assert.True(result.IsFailure);
+    Assert.IsType<SpecificDomainError>(result.Error);
+    Assert.Equal("Expected error message", result.Error.Message);
+    ```
 
 **5. Mocking and Stubbing:**
-    *Use a mocking framework like Moq or NSubstitute (check project dependencies to see which one, if any, is standard). For now, assume Moq if one needs to be chosen.
-    * Mock dependencies of the System Under Test (SUT).
-    *Only mock types you own or have control over where feasible. Avoid mocking concrete types from external libraries if their interfaces are available.
-    * Verify mock interactions if they are part of the behavior being tested (e.g., `mockRepository.Verify(r => r.AddAsync(It.IsAny<Character>()), Times.Once);`).
+
+* Use a mocking framework like Moq (or NSubstitute if preferred project-wide).
+* Mock dependencies of the System Under Test (SUT).
+* Verify mock interactions if they are part of the behavior being tested.
 
 **6. Test Data:**
-    *Use clear and representative test data.
-    * Avoid "magic values"; assign test data to clearly named variables.
-    * Consider using libraries like AutoFixture for generating test data if it's a project standard, but simple manual creation is fine for most cases.
+
+* Use clear and representative test data. Assign to clearly named variables.
+* Avoid "magic values".
 
 **7. Independence and Repeatability:**
-    *Tests must be independent of each other. The outcome of one test should not affect another.
-    * Tests must be repeatable and produce the same results every time they are run. Avoid dependencies on external systems (unless writing integration tests, which have different considerations).
+
+* Tests must be independent and repeatable.
+* Avoid dependencies on external systems for unit tests.
 
 **8. Coverage:**
-    *Aim for good test coverage of the logic being implemented. Test edge cases, boundary conditions, and common scenarios.
-    * For `Result<TSuccess, TError>` types, ensure both success and failure paths are tested.
+
+* Aim for good coverage of logic, edge cases, and boundary conditions.
+* For `Result<TSuccess, TError>` types, test both success and failure paths.
 
 **9. Readability:**
-    * Tests should be as readable as the production code. They serve as documentation for the behavior of the code under test.
+
+* Tests should be as readable as production code and serve as documentation.
 
 **Example for a Command Handler Test:**
 
@@ -95,7 +104,7 @@ public class CreateCharacterCommandHandlerTests
         var cancellationToken = CancellationToken.None;
 
         _mockCharacterRepository.Setup(r => r.AddAsync(It.IsAny<Character>(), cancellationToken))
-            .Returns(Task.CompletedTask); // Or returns the character if AddAsync does
+            .Returns(Task.CompletedTask);
         _mockEventPublisher.Setup(p => p.PublishAsync(It.IsAny<CharacterCreatedEvent>(), cancellationToken))
             .Returns(Task.CompletedTask);
 
@@ -104,8 +113,6 @@ public class CreateCharacterCommandHandlerTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        // Assuming Success is a simple type or you want to check the CharacterId from result.Value
-        // Assert.NotNull(result.Value.CharacterId); 
         _mockCharacterRepository.Verify(r => r.AddAsync(It.Is<Character>(c => c.Name == command.Name), cancellationToken), Times.Once);
         _mockEventPublisher.Verify(p => p.PublishAsync(It.Is<CharacterCreatedEvent>(e => e.Name == command.Name), cancellationToken), Times.Once);
     }
@@ -126,7 +133,10 @@ public class CreateCharacterCommandHandlerTests
 
         // Assert
         Assert.True(result.IsFailure);
-        Assert.IsType<ApplicationError>(result.Error); // Assuming a generic ApplicationError for such cases
+        Assert.IsType<ApplicationError>(result.Error);
         Assert.Contains("Database error", result.Error.Message);
     }
 }
+```
+
+Focus on testing the logic within the unit, mocking its external dependencies effectively.

@@ -1,0 +1,36 @@
+{
+  "chat.edits2.enabled": true,
+  "chat.renderRelatedFiles": true,
+  "chat.tools.autoApprove": false,
+  "inlineChat.enableV2": true,
+  "inlineChat.lineEmptyHint": false,
+  "github.copilot.nextEditSuggestions.fixes": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.reviewSelection.instructions": [
+    {
+      "file": ".github/copilot-code-review.md"
+    }
+  ],
+  "github.copilot.chat.agent.thinkingTool": true,
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": ".github/copilot-code-generation.md"
+    }
+  ],
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": ".github/copilot-commit-message-generation.md"
+    }
+  ],
+  "github.copilot.chat.pullRequestDescriptionGeneration.instructions": [
+    {
+      "file": ".github/copilot-pr-title-and-description.md"
+    }
+  ],
+  "github.copilot.chat.search.keywordSuggestions": true,
+  "github.copilot.chat.testGeneration.instructions": [
+    {
+      "file": ".github/copilot-test-generation.md"
+    }
+  ]
+}
