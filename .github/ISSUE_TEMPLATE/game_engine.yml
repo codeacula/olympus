@@ -1,0 +1,32 @@
+name: Game Engine Discussion
+description: Ask a question or propose a change to hosted rulesets
+title: "[Rules] <short summary>"
+labels: ["rules", "discussion"]
+body:
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Game engine
+      options:
+        - DnD 5e SRD
+        - Shadownetrun 5e
+    validations:
+      required: true
+  - type: textarea
+    id: rule
+    attributes:
+      label: Rule text / citation
+      description: Book & page or SRD link
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question or proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Gameplay impact
+      description: Balance, pacing, or tooling considerations
