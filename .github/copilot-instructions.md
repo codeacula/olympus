@@ -1,58 +1,30 @@
----
-applyTo: "**"
----
 
-## About the Olympus Project
+## 1. Big‑Picture Context
+- Olympus is a modular monolith that **must** respect Clean Architecture boundaries (`Domain`, `Application`, `Infrastructure`, `Presentation/Clients`).
+- Commands and Queries flow through MediatR; key aggregates use Event Sourcing (Marten) and project read models to Redis.
+- The AI layer wraps Semantic Kernel; external events will eventually emit to RabbitMQ.
 
-Olympus is an AI-Powered Tabletop RPG Platform. Its core mission is to provide a flexible, immersive,
-and deeply interactive environment for playing various tabletop roleplaying games.
+## 2. What Copilot Should Propose
+1. **Layer‑appropriate constructs only**  
+   - Domain: aggregates, VOs, domain services.  
+   - Application: CQRS handlers, orchestration, Result/Option types.  
+   - Infrastructure: concrete data access, ECS, SK plugins.
+1. **Modern C# idioms**  
+   - Records (`record class`, `readonly record struct`), required members, pattern matching, primary constructors.
+1. **Error handling**  
+   - Use `Result<TSuccess,TError>` and `Option<T>` rather than exceptions in core flows.
+1. **Logging**  
+   - Prefer `LoggerMessage` source‑generation; surface errors with structured logging.
+1. **Testing first**  
+   - Generate xUnit tests per [copilot-test-generation.md](copilot-test-generation.md).
 
-**Key Architectural Pillars & Principles:**
+## 3. What Copilot Must Avoid
+- Cross‑layer references (e.g., Domain → Infrastructure).
+- God objects or static state.
+- Hard‑coding configuration (use `IOptions<T>`).
+- Generating code without XML docs when a public API.
 
-* **Language:** C# (targeting .NET 9+)
-* **Primary Architecture:** Clean Architecture (Domain, Application, Infrastructure, Presentation/Clients)
-* **Core Patterns:**
-    * CQRS (Command Query Responsibility Segregation) using MediatR for in-process dispatch.
-    * Event Sourcing (ES) with Marten on PostgreSQL for key domain entities.
-    * Data-Oriented Programming (DOP) influences & Entity Component System (ECS) for dynamic game
-        world state (generic NPCs, environment) primarily in Redis.
-* **AI Integration:** Semantic Kernel with OpenAI as the initial LLM.
-* **Clients:** Starting with Discord bots, with a Vue.js web portal planned.
-
-**Developer Persona:**
-
-Assume you are assisting a **Senior Software Engineer** experienced with these patterns and C#/.NET.
-Focus on providing idiomatic, performant, and maintainable code. Avoid overly simplistic
-explanations unless specifically asked.
-
-**Key Technologies & Libraries:**
-
-* .NET 9+
-* ASP.NET Core
-* MediatR
-* Marten (for PostgreSQL Event Sourcing)
-* Redis (for ECS and caching)
-* Semantic Kernel (for AI orchestration)
-* xUnit (for testing)
-* Discord.Net (for Discord bot client)
-* Potentially Vue.js for the web portal.
-
-**General Coding Style & Expectations:**
-
-* Adhere to Clean Architecture principles: strict separation of concerns, dependency rule (flow inwards).
-* Embrace modern C# features (records, primary constructors, pattern matching, `required` members,
-    static abstract members in interfaces, file-local types, source-generated logging,
-    `IAsyncEnumerable<T>`, `ValueTask<T>`).
-* Prioritize immutability for DTOs, Commands, Queries, Events, and Value Objects
-    (use `record class`, `readonly record struct`).
-* Implement explicit error handling using `Result<TSuccess, TError>` types (Railway Oriented Programming).
-* Use `Option<T>` for values that may legitimately be absent.
-* Ensure high cohesion and low coupling.
-* Write testable code. Unit tests are expected for new logic.
-* Follow existing patterns within the codebase (e.g., Value Objects, Aggregates, MediatR
-    command/query handlers, feature slices).
-* Keep AI prompts and plugin configurations declarative.
-* Structure new features like vertical slices where appropriate.
-
-Refer to the `plan.md` document in the repository for a more detailed architectural blueprint.
-When generating code, assume we are within a feature slice or appropriate layer of the Clean Architecture.
+## 4. File References
+- Commits: [copilot-commit-message-generation.md](copilot-commit-message-generation.md)
+- PRs: [copilot-pr-title-and-description.md](copilot-pr-title-and-description.md)
+- Reviews: [copilot-code-review.md](copilot-code-review.md)
