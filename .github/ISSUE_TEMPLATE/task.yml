@@ -15,11 +15,11 @@ body:
     attributes:
       label: Estimated size
       options:
-        - XS (≤1h)
-        - S (2-4h)
-        - M (4-8h)
-        - L (8-16h)
-        - XL (>16h)
+        - 1
+        - 2
+        - 3
+        - 5
+        - 8
   - type: textarea
     id: context
     attributes:
