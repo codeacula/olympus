@@ -2,7 +2,7 @@
 applyTo: "**/*" # Applies generally when PR generation is requested
 ---
 
-## Olympus Pull Request Title & Description Generation Guidelines
+# Olympus Pull Request Title & Description Generation Guidelines
 
 Generate PR titles and descriptions for Olympus that are clear, complete, and adhere
 to project conventions.

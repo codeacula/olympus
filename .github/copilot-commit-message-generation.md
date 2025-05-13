@@ -2,7 +2,7 @@
 applyTo: "**/*" # Applies generally when commit message generation is requested
 ---
 
-## Olympus Commit Message Generation Guidelines
+# Olympus Commit Message Generation Guidelines
 
 When generating commit messages for Olympus, follow **Conventional Commits** (v1.0.0).
 
@@ -61,7 +61,7 @@ When generating commit messages for Olympus, follow **Conventional Commits** (v1
 
 **Simple Fix:**
 
-```
+```text
 
 fix(app): ensure UserId passed to CampaignCreationService
 
@@ -72,7 +72,7 @@ user's ID is properly utilized.
 
 **New Feature with Scope:**
 
-```
+```text
 
 feat(domain): implement basic combat resolution in DamageResolutionService
 

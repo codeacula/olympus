@@ -2,7 +2,7 @@
 applyTo: "**/*Tests.cs" # Applies when generating tests
 ---
 
-## Olympus Test Generation Guidelines (xUnit)
+# Olympus Test Generation Guidelines (xUnit)
 
 When generating unit tests for the Olympus project using xUnit, please adhere to the following:
 

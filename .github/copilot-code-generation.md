@@ -2,7 +2,7 @@
 applyTo: "**/*" # Applies broadly when code generation tasks are invoked
 ---
 
-## Olympus Code Generation Guidelines for Copilot
+# Olympus Code Generation Guidelines for Copilot
 
 When you are generating code for the Olympus project, please adhere to the following principles:
 

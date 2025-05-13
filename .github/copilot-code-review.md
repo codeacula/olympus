@@ -2,7 +2,7 @@
 applyTo: "**/*" # Applies broadly when code review tasks are invoked
 ---
 
-## Olympus Code Review Guidelines for Copilot
+# Olympus Code Review Guidelines for Copilot
 
 When asked to review code for the Olympus project, please act as a constructive and
 thorough Senior Software Engineer. Your feedback should be actionable and educational.
