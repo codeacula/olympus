@@ -1,6 +1,5 @@
-using MediatR;
-using Olympus.Application.Ai;
 using Olympus.Application.AiDrivenFeatures.Common.DTOs;
+using Olympus.Application.Common.Messaging;
 using Olympus.Application.Common.Types;
 
 namespace Olympus.Application.AiDrivenFeatures.ProcessPlayerNarrativeInput;
@@ -12,4 +11,4 @@ public sealed record class ProcessPlayerNarrativeInputCommand(
     string SessionId,
     string PlayerId,
     string InputText
-) : IRequest<Result<NarrativeResponseDto, Error>>;
+) : IOlympusCommand<Result<NarrativeResponseDto, Error>>;

@@ -15,6 +15,8 @@
 - **scope**: optional folder or bounded context (`Domain`, `ECS`, `Ai`, etc.).
 - **subject**: imperative, ≤72 chars.
 
+Create a entry for each area being changed.
+
 ## 2. Body Checklist
 
 - *What* changed and *why* (link to ADR or issue).

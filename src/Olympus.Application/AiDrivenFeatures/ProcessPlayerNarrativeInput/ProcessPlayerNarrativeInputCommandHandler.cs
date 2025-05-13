@@ -1,7 +1,7 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using Olympus.Application.Ai;
 using Olympus.Application.AiDrivenFeatures.Common.DTOs;
+using Olympus.Application.Common.Messaging;
 using Olympus.Application.Common.Types;
 
 namespace Olympus.Application.AiDrivenFeatures.ProcessPlayerNarrativeInput;
@@ -10,7 +10,7 @@ namespace Olympus.Application.AiDrivenFeatures.ProcessPlayerNarrativeInput;
 /// Handles the processing of player narrative input and returns an AI-generated response.
 /// </summary>
 public sealed class ProcessPlayerNarrativeInputCommandHandler
-    : IRequestHandler<ProcessPlayerNarrativeInputCommand, Result<NarrativeResponseDto, Error>>
+    : IOlympusCommandHandler<ProcessPlayerNarrativeInputCommand, Result<NarrativeResponseDto, Error>>
 {
   private readonly ISemanticKernelOrchestrator _orchestrator;
   private readonly IGameSessionNarrativeContextService _contextService;

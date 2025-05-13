@@ -6,4 +6,9 @@
     <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.13.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.13.61" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
+
+  <!-- Apply our custom analyzer to all projects except the analyzer project itself -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' != 'Olympus.CodeAnalysis.Analyzers'">
+    <PackageReference Include="Olympus.CodeAnalysis.Analyzers" Version="1.0.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
 </Project>

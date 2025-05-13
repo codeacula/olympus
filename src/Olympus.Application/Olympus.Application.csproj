@@ -3,9 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Olympus.Domain\Olympus.Domain.csproj" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
   </ItemGroup>
 
