@@ -1,4 +1,4 @@
-﻿namespace Olympus.Infrastructure.Caching.Redis;
+namespace Olympus.Infrastructure.Caching.Redis;
 
 public class Class1
 {

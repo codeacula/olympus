@@ -8,11 +8,11 @@ namespace Olympus.Application.Common.Messaging;
 public interface IOlympusCommandHandler<in TCommand, TResult>
     where TCommand : IOlympusCommand<TResult>
 {
-    /// <summary>
-    /// Handles the specified command and returns a result
-    /// </summary>
-    /// <param name="command">The command to process</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The result of processing the command</returns>
-    Task<TResult> Handle(TCommand command, CancellationToken cancellationToken);
+  /// <summary>
+  /// Handles the specified command and returns a result
+  /// </summary>
+  /// <param name="command">The command to process</param>
+  /// <param name="cancellationToken">Cancellation token</param>
+  /// <returns>The result of processing the command</returns>
+  Task<TResult> HandleAsync(TCommand command, CancellationToken cancellationToken);
 }

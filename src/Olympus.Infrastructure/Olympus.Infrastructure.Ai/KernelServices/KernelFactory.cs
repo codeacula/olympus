@@ -5,5 +5,5 @@ namespace Olympus.Infrastructure.Ai.KernelServices;
 /// </summary>
 public sealed class KernelFactory
 {
-    // Placeholder for actual implementation
+  // Placeholder for actual implementation
 }

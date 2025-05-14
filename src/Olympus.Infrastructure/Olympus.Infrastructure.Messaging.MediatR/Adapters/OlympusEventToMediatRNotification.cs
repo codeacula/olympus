@@ -10,17 +10,17 @@ namespace Olympus.Infrastructure.Messaging.MediatR.Adapters;
 internal class OlympusEventToMediatRNotification<TEvent> : INotification
     where TEvent : IOlympusEvent
 {
-    /// <summary>
-    /// The wrapped Olympus event
-    /// </summary>
-    public TEvent Event { get; }
+  /// <summary>
+  /// The wrapped Olympus event
+  /// </summary>
+  public TEvent Event { get; }
 
-    /// <summary>
-    /// Creates a new adapter wrapping the specified event
-    /// </summary>
-    /// <param name="event">The event to wrap</param>
-    public OlympusEventToMediatRNotification(TEvent @event)
-    {
-        Event = @event;
-    }
+  /// <summary>
+  /// Creates a new adapter wrapping the specified event
+  /// </summary>
+  /// <param name="event">The event to wrap</param>
+  public OlympusEventToMediatRNotification(TEvent @event)
+  {
+    Event = @event;
+  }
 }

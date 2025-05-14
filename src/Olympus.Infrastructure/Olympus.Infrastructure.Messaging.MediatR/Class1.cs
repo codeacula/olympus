@@ -1,4 +1,4 @@
-﻿namespace Olympus.Infrastructure.Messaging.MediatR;
+namespace Olympus.Infrastructure.Messaging.MediatR;
 
 public class Class1
 {

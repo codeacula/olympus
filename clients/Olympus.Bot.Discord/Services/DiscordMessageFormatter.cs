@@ -5,5 +5,5 @@ namespace Olympus.Bot.Discord.Services;
 /// </summary>
 public static class DiscordMessageFormatter
 {
-    // TODO: Implement formatting logic for AI responses and other messages
+  // TODO: Implement formatting logic for AI responses and other messages
 }

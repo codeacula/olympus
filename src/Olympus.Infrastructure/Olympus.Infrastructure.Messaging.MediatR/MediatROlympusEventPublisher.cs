@@ -9,19 +9,19 @@ namespace Olympus.Infrastructure.Messaging.MediatR;
 /// </summary>
 public class MediatROlympusEventPublisher : IOlympusEventPublisher
 {
-    private readonly IPublisher _publisher;
+  private readonly IPublisher _publisher;
 
-    public MediatROlympusEventPublisher(IPublisher publisher)
-    {
-        _publisher = publisher;
-    }
+  public MediatROlympusEventPublisher(IPublisher publisher)
+  {
+    _publisher = publisher;
+  }
 
-    public async Task PublishAsync<TEvent>(
-        TEvent @event,
-        CancellationToken cancellationToken = default)
-        where TEvent : IOlympusEvent
-    {
-        var notification = new OlympusEventToMediatRNotification<TEvent>(@event);
-        await _publisher.Publish(notification, cancellationToken);
-    }
+  public async Task PublishAsync<TEvent>(
+      TEvent @event,
+      CancellationToken cancellationToken = default)
+      where TEvent : IOlympusEvent
+  {
+    var notification = new OlympusEventToMediatRNotification<TEvent>(@event);
+    await _publisher.Publish(notification, cancellationToken);
+  }
 }

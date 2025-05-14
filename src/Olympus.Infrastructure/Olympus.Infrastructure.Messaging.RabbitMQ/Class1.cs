@@ -1,4 +1,4 @@
-﻿namespace Olympus.Infrastructure.Messaging.RabbitMQ;
+namespace Olympus.Infrastructure.Messaging.RabbitMQ;
 
 public class Class1
 {

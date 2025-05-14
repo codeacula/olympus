@@ -7,10 +7,10 @@ namespace Olympus.Application.Common.Messaging;
 public interface IOlympusEventHandler<in TEvent>
     where TEvent : IOlympusEvent
 {
-    /// <summary>
-    /// Handles the specified event
-    /// </summary>
-    /// <param name="event">The event to process</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    Task Handle(TEvent @event, CancellationToken cancellationToken);
+  /// <summary>
+  /// Handles the specified event
+  /// </summary>
+  /// <param name="event">The event to process</param>
+  /// <param name="cancellationToken">Cancellation token</param>
+  Task HandleAsync(TEvent @event, CancellationToken cancellationToken);
 }

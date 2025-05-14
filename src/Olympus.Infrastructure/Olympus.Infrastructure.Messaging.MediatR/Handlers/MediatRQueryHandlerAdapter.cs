@@ -11,15 +11,15 @@ internal class MediatRQueryHandlerAdapter<TQuery, TResult>
     : IRequestHandler<OlympusQueryToMediatRRequest<TQuery, TResult>, TResult>
     where TQuery : IOlympusQuery<TResult>
 {
-    private readonly IOlympusQueryHandler<TQuery, TResult> _handler;
+  private readonly IOlympusQueryHandler<TQuery, TResult> _handler;
 
-    public MediatRQueryHandlerAdapter(IOlympusQueryHandler<TQuery, TResult> handler)
-    {
-        _handler = handler;
-    }
+  public MediatRQueryHandlerAdapter(IOlympusQueryHandler<TQuery, TResult> handler)
+  {
+    _handler = handler;
+  }
 
-    public Task<TResult> Handle(OlympusQueryToMediatRRequest<TQuery, TResult> request, CancellationToken cancellationToken)
-    {
-        return _handler.Handle(request.Query, cancellationToken);
-    }
+  public Task<TResult> Handle(OlympusQueryToMediatRRequest<TQuery, TResult> request, CancellationToken cancellationToken)
+  {
+    return _handler.HandleAsync(request.Query, cancellationToken);
+  }
 }

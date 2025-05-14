@@ -13,35 +13,35 @@ namespace Olympus.Tests.Application.AiDrivenFeatures.ProcessPlayerNarrativeInput
 
 public class ProcessPlayerNarrativeInputCommandHandlerTests
 {
-    private readonly ISemanticKernelOrchestrator _orchestrator;
-    private readonly IGameSessionNarrativeContextService _contextService;
-    private readonly ILogger<ProcessPlayerNarrativeInputCommandHandler> _logger;
-    private readonly ProcessPlayerNarrativeInputCommandHandler _handler;
+  private readonly ISemanticKernelOrchestrator _orchestrator;
+  private readonly IGameSessionNarrativeContextService _contextService;
+  private readonly ILogger<ProcessPlayerNarrativeInputCommandHandler> _logger;
+  private readonly ProcessPlayerNarrativeInputCommandHandler _handler;
 
-    public ProcessPlayerNarrativeInputCommandHandlerTests()
-    {
-        _orchestrator = Substitute.For<ISemanticKernelOrchestrator>();
-        _contextService = Substitute.For<IGameSessionNarrativeContextService>();
-        _logger = Substitute.For<ILogger<ProcessPlayerNarrativeInputCommandHandler>>();
-        _handler = new ProcessPlayerNarrativeInputCommandHandler(_orchestrator, _contextService, _logger);
-    }
+  public ProcessPlayerNarrativeInputCommandHandlerTests()
+  {
+    _orchestrator = Substitute.For<ISemanticKernelOrchestrator>();
+    _contextService = Substitute.For<IGameSessionNarrativeContextService>();
+    _logger = Substitute.For<ILogger<ProcessPlayerNarrativeInputCommandHandler>>();
+    _handler = new ProcessPlayerNarrativeInputCommandHandler(_orchestrator, _contextService, _logger);
+  }
 
-    [Fact]
-    public async Task Handle_GivenValidCommand_ShouldReturnFailNotImplemented()
-    {
-        // Arrange
-        var command = new ProcessPlayerNarrativeInputCommand(
-            SessionId: "session-123",
-            PlayerId: "player-123",
-            InputText: "I cast a fireball at the orc."
-        );
+  [Fact]
+  public async Task Handle_GivenValidCommand_ShouldReturnFailNotImplementedAsync()
+  {
+    // Arrange
+    var command = new ProcessPlayerNarrativeInputCommand(
+        SessionId: "session-123",
+        PlayerId: "player-123",
+        InputText: "I cast a fireball at the orc."
+    );
 
-        // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+    // Act
+    var result = await _handler.HandleAsync(command, CancellationToken.None);
 
-        // Assert
-        result.IsSuccess.Should().BeFalse();
-        result.Error.Should().NotBeNull();
-        result.Error!.Message.Should().Be("NotImplemented");
-    }
+    // Assert
+    result.IsSuccess.Should().BeFalse();
+    result.Error.Should().NotBeNull();
+    result.Error!.Message.Should().Be("NotImplemented");
+  }
 }

@@ -11,15 +11,15 @@ internal class MediatRCommandHandlerAdapter<TCommand, TResult>
     : IRequestHandler<OlympusCommandToMediatRRequest<TCommand, TResult>, TResult>
     where TCommand : IOlympusCommand<TResult>
 {
-    private readonly IOlympusCommandHandler<TCommand, TResult> _handler;
+  private readonly IOlympusCommandHandler<TCommand, TResult> _handler;
 
-    public MediatRCommandHandlerAdapter(IOlympusCommandHandler<TCommand, TResult> handler)
-    {
-        _handler = handler;
-    }
+  public MediatRCommandHandlerAdapter(IOlympusCommandHandler<TCommand, TResult> handler)
+  {
+    _handler = handler;
+  }
 
-    public Task<TResult> Handle(OlympusCommandToMediatRRequest<TCommand, TResult> request, CancellationToken cancellationToken)
-    {
-        return _handler.Handle(request.Command, cancellationToken);
-    }
+  public Task<TResult> Handle(OlympusCommandToMediatRRequest<TCommand, TResult> request, CancellationToken cancellationToken)
+  {
+    return _handler.HandleAsync(request.Command, cancellationToken);
+  }
 }

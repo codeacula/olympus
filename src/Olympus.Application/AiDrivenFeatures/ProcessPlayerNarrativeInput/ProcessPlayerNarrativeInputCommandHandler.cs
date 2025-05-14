@@ -26,7 +26,7 @@ public sealed class ProcessPlayerNarrativeInputCommandHandler
     _logger = logger;
   }
 
-  public async Task<Result<NarrativeResponseDto, Error>> Handle(
+  public async Task<Result<NarrativeResponseDto, Error>> HandleAsync(
       ProcessPlayerNarrativeInputCommand command,
       CancellationToken cancellationToken)
   {

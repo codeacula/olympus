@@ -1,4 +1,4 @@
-﻿namespace Olympus.Infrastructure.Ai;
+namespace Olympus.Infrastructure.Ai;
 
 public class Class1
 {

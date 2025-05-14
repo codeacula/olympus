@@ -8,6 +8,6 @@ namespace Olympus.Application.Ai;
 /// </summary>
 public interface IGameSessionNarrativeContextService
 {
-    ValueTask<Option<NarrativeContext>> GetContextAsync(string sessionId, CancellationToken cancellationToken = default);
-    ValueTask SaveContextAsync(NarrativeContext context, CancellationToken cancellationToken = default);
+  ValueTask<Option<NarrativeContext>> GetContextAsync(string sessionId, CancellationToken cancellationToken = default);
+  ValueTask SaveContextAsync(NarrativeContext context, CancellationToken cancellationToken = default);
 }

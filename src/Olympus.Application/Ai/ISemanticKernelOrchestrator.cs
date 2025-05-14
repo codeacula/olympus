@@ -8,9 +8,9 @@ namespace Olympus.Application.Ai;
 /// </summary>
 public interface ISemanticKernelOrchestrator
 {
-    ValueTask<Result<NarrativeResponseDto, Error>> GenerateNarrativeAsync(
-        string sessionId,
-        string playerId,
-        string inputText,
-        CancellationToken cancellationToken = default);
+  ValueTask<Result<NarrativeResponseDto, Error>> GenerateNarrativeAsync(
+      string sessionId,
+      string playerId,
+      string inputText,
+      CancellationToken cancellationToken = default);
 }

@@ -11,17 +11,17 @@ namespace Olympus.Infrastructure.Messaging.MediatR.Adapters;
 internal class OlympusCommandToMediatRRequest<TCommand, TResult> : IRequest<TResult>
     where TCommand : IOlympusCommand<TResult>
 {
-    /// <summary>
-    /// The wrapped Olympus command
-    /// </summary>
-    public TCommand Command { get; }
+  /// <summary>
+  /// The wrapped Olympus command
+  /// </summary>
+  public TCommand Command { get; }
 
-    /// <summary>
-    /// Creates a new adapter wrapping the specified command
-    /// </summary>
-    /// <param name="command">The command to wrap</param>
-    public OlympusCommandToMediatRRequest(TCommand command)
-    {
-        Command = command;
-    }
+  /// <summary>
+  /// Creates a new adapter wrapping the specified command
+  /// </summary>
+  /// <param name="command">The command to wrap</param>
+  public OlympusCommandToMediatRRequest(TCommand command)
+  {
+    Command = command;
+  }
 }
