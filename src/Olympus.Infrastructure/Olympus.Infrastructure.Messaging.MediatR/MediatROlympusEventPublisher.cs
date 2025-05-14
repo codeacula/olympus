@@ -7,6 +7,7 @@ namespace Olympus.Infrastructure.Messaging.MediatR;
 /// <summary>
 /// Implementation of the Olympus event publisher using MediatR
 /// </summary>
+/// <param name="publisher"></param>
 public class MediatROlympusEventPublisher(IPublisher publisher) : IOlympusEventPublisher
 {
   private readonly IPublisher _publisher = publisher;

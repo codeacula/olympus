@@ -1,6 +1,3 @@
 namespace Olympus.Infrastructure.Ai;
 
-public class Class1
-{
-
-}
+public class Class1;

@@ -1,5 +1,3 @@
 namespace Olympus.Domain.Common;
 
-public abstract class Entity
-{
-}
+public abstract class Entity;

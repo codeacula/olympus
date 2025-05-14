@@ -7,6 +7,7 @@ namespace Olympus.Infrastructure.Messaging.MediatR.Handlers;
 /// <summary>
 /// Adapts the Olympus query handler interface to MediatR's request handler
 /// </summary>
+/// <param name="handler"></param>
 internal class MediatRQueryHandlerAdapter<TQuery, TResult>(IOlympusQueryHandler<TQuery, TResult> handler)
     : IRequestHandler<OlympusQueryToMediatRRequest<TQuery, TResult>, TResult>
     where TQuery : IOlympusQuery<TResult>

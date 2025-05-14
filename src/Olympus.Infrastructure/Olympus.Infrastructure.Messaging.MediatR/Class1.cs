@@ -1,6 +1,3 @@
 namespace Olympus.Infrastructure.Messaging.MediatR;
 
-public class Class1
-{
-
-}
+public class Class1;

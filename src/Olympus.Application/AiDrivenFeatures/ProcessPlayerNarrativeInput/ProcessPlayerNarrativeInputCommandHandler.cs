@@ -7,15 +7,17 @@ using Olympus.Application.Common.Types;
 namespace Olympus.Application.AiDrivenFeatures.ProcessPlayerNarrativeInput;
 
 /// <summary>
-/// Handles the processing of player narrative input and returns an AI-generated response.
+/// Handles processing a player's narrative input and generating an AI response.
 /// </summary>
+/// <param name="orchestrator"></param>
+/// <param name="contextService"></param>
+/// <param name="logger"></param>
 public sealed class ProcessPlayerNarrativeInputCommandHandler(
     ISemanticKernelOrchestrator orchestrator,
     IGameSessionNarrativeContextService contextService,
-    ILogger<ProcessPlayerNarrativeInputCommandHandler> logger)
-        : IOlympusCommandHandler<ProcessPlayerNarrativeInputCommand, Result<NarrativeResponseDto, Error>>
+    ILogger<ProcessPlayerNarrativeInputCommandHandler> logger) :
+    IOlympusCommandHandler<ProcessPlayerNarrativeInputCommand, Result<NarrativeResponseDto, Error>>
 {
-  private readonly ISemanticKernelOrchestrator _orchestrator = orchestrator;
   private readonly IGameSessionNarrativeContextService _contextService = contextService;
   private readonly ILogger<ProcessPlayerNarrativeInputCommandHandler> _logger = logger;
 
@@ -24,10 +26,36 @@ public sealed class ProcessPlayerNarrativeInputCommandHandler(
       CancellationToken cancellationToken)
   {
     using var _ = _logger.BeginScope("Processing narrative input for session {SessionId}", command.SessionId);
+    _logger.LogInformation("Processing narrative input: {InputText}", command.Input);
 
-    // TODO: Implement logic
-    _logger.LogInformation("Processing narrative input: {InputText}", command.InputText);
+    try
+    {
+      // Get the current context (or create new one if it doesn't exist)
+      var contextOption = await _contextService.GetContextAsync(
+          command.SessionId.Value,
+          cancellationToken);
 
-    return Result<NarrativeResponseDto, Error>.Fail(new Error("NotImplemented"));
+      // For the MVP, we'll generate a simple response
+      // In a real implementation, this would use the semantic kernel to process the input
+      // based on the current context and generate a response
+      var aiResponse = "This is a simulated AI response for the MVP. The AI acknowledges your input: " + command.Input;
+
+      // Create a list of updated context elements (in a real implementation, this would be more sophisticated)
+      var updatedContext = new List<string>
+      {
+          $"User {command.UserId.Value} said: {command.Input}",
+          $"AI responded: {aiResponse}"
+      };
+
+      // Return the response DTO
+      return Result<NarrativeResponseDto, Error>.Ok(new NarrativeResponseDto(
+          aiResponse,
+          updatedContext));
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "Error processing narrative input");
+      return Result<NarrativeResponseDto, Error>.Fail(new Error("ProcessingError", ex.Message));
+    }
   }
 }

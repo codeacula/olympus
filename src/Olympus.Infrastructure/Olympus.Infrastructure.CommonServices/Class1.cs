@@ -1,6 +1,3 @@
 namespace Olympus.Infrastructure.CommonServices;
 
-public class Class1
-{
-
-}
+public class Class1;

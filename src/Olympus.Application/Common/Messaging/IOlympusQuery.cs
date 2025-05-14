@@ -4,4 +4,4 @@ namespace Olympus.Application.Common.Messaging;
 /// Marker interface for queries that retrieve data in the Olympus application
 /// </summary>
 /// <typeparam name="TResult">The type of result retrieved by this query</typeparam>
-public interface IOlympusQuery<out TResult> { }
+public interface IOlympusQuery<out TResult>;

@@ -23,10 +23,7 @@ public static class DependencyInjection
       Assembly applicationAssembly)
   {
     // Register MediatR
-    _ = services.AddMediatR(cfg =>
-    {
-      _ = cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
-    });
+    _ = services.AddMediatR(cfg => _ = cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
     // Register our Olympus dispatcher and publisher
     _ = services.AddTransient<IOlympusDispatcher, MediatROlympusDispatcher>();
@@ -47,8 +44,7 @@ public static class DependencyInjection
   private static void RegisterCommandHandlers(IServiceCollection services, Assembly applicationAssembly)
   {
     var commandHandlerTypes = applicationAssembly.GetTypes()
-        .Where(t => !t.IsAbstract && !t.IsInterface)
-        .Where(t => t.GetInterfaces().Any(i =>
+        .Where(t => !t.IsAbstract && !t.IsInterface && t.GetInterfaces().Any(i =>
             i.IsGenericType &&
             i.GetGenericTypeDefinition() == typeof(IOlympusCommandHandler<,>)));
 
@@ -78,8 +74,7 @@ public static class DependencyInjection
   private static void RegisterQueryHandlers(IServiceCollection services, Assembly applicationAssembly)
   {
     var queryHandlerTypes = applicationAssembly.GetTypes()
-        .Where(t => !t.IsAbstract && !t.IsInterface)
-        .Where(t => t.GetInterfaces().Any(i =>
+        .Where(t => !t.IsAbstract && !t.IsInterface && t.GetInterfaces().Any(i =>
             i.IsGenericType &&
             i.GetGenericTypeDefinition() == typeof(IOlympusQueryHandler<,>)));
 
@@ -109,8 +104,7 @@ public static class DependencyInjection
   private static void RegisterEventHandlers(IServiceCollection services, Assembly applicationAssembly)
   {
     var eventHandlerTypes = applicationAssembly.GetTypes()
-        .Where(t => !t.IsAbstract && !t.IsInterface)
-        .Where(t => t.GetInterfaces().Any(i =>
+        .Where(t => !t.IsAbstract && !t.IsInterface && t.GetInterfaces().Any(i =>
             i.IsGenericType &&
             i.GetGenericTypeDefinition() == typeof(IOlympusEventHandler<>)));
 

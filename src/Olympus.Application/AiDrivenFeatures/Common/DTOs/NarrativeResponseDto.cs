@@ -1,6 +1,10 @@
 namespace Olympus.Application.AiDrivenFeatures.Common.DTOs;
 
 /// <summary>
-/// DTO representing the AI-generated narrative response.
+/// Data Transfer Object for narrative response from the AI system.
 /// </summary>
-public sealed record class NarrativeResponseDto(string ResponseText);
+/// <param name="Response"></param>
+/// <param name="UpdatedContext"></param>
+public sealed record class NarrativeResponseDto(
+    string Response,
+    IEnumerable<string> UpdatedContext);

@@ -5,7 +5,11 @@ namespace Olympus.Infrastructure.Ai.Plugins.CoreUtilityPlugin.NativeFunctions;
 /// </summary>
 public static class SimpleChanceRoll
 {
-  // Placeholder for actual implementation
+  /// <summary>
+  /// Placeholder for actual implementation
+  /// </summary>
+  /// <param name="percentChance"></param>
+  /// <returns></returns>
   public static bool Roll(int percentChance)
   {
     // TODO: Implement real random logic

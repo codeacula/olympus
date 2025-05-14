@@ -1,4 +1,6 @@
 namespace Olympus.Application.Abstractions.Gateways;
 
-// Marker interface for event publishing
-public interface IEventPublisher { }
+/// <summary>
+/// Marker interface for event publishing
+/// </summary>
+public interface IEventPublisher;

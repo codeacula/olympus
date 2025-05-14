@@ -7,6 +7,7 @@ namespace Olympus.Infrastructure.Messaging.MediatR;
 /// <summary>
 /// Implementation of the Olympus dispatcher using MediatR
 /// </summary>
+/// <param name="mediator"></param>
 public class MediatROlympusDispatcher(IMediator mediator) : IOlympusDispatcher
 {
   private readonly IMediator _mediator = mediator;

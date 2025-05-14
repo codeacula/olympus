@@ -7,6 +7,7 @@ namespace Olympus.Infrastructure.Messaging.MediatR.Handlers;
 /// <summary>
 /// Adapts the Olympus command handler interface to MediatR's request handler
 /// </summary>
+/// <param name="handler"></param>
 internal class MediatRCommandHandlerAdapter<TCommand, TResult>(IOlympusCommandHandler<TCommand, TResult> handler)
     : IRequestHandler<OlympusCommandToMediatRRequest<TCommand, TResult>, TResult>
     where TCommand : IOlympusCommand<TResult>
