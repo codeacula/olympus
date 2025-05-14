@@ -39,6 +39,56 @@ applyTo: "**/*"
   - Document significant architectural or structural decisions by creating or updating Architecture Decision Records (ADRs) in the `docs/adr/` directory.
   - For non-obvious logic or complex algorithms within any code, provide clear comments explaining the "why" and "how."
 
+## Error Handling Patterns
+
+- **Result Pattern (Conceptual)**:
+  - Use a Result pattern for operations that can fail in expected ways
+  - Return success with the operation's value for successful operations
+  - Return failure with descriptive error information for expected failure cases
+  - Chain operations with Results where appropriate
+  - Do not throw exceptions for expected failure scenarios; use the Result pattern instead
+- **Option Pattern (Conceptual)**:
+  - Use an Option pattern for values that may or may not exist
+  - Never return or accept null where an Option would be more appropriate
+  - Always handle both the "Some" and "None" cases when consuming optional values
+
+  (Note: See language-specific instruction files for implementation details)
+
+## AI Integration Guidelines
+
+- **Semantic Kernel Integration**:
+  - Structure AI prompts as reusable templates with clearly defined variables
+  - Separate prompt templates from execution logic to allow for easier testing and updates
+  - Cache AI responses when appropriate to reduce API calls and improve performance
+  - Include appropriate error handling for AI service failures or unexpected responses
+- **AI Context Management**:
+  - Maintain clear boundaries between game state, player input, and AI context
+  - Implement context windowing strategies for long-running AI interactions
+  - Track token usage and implement strategies to handle context limitations
+
+## Domain Event Conventions
+
+- **Event Structure (Conceptual)**:
+  - Name events in past tense (e.g., `PlayerJoinedGame`, `CharacterCreated`)
+  - Include the aggregate ID and other essential data needed to understand what happened
+  - Make events immutable and serializable
+  - Include a timestamp and version information
+- **Event Versioning**:
+  - Use explicit versioning for events to support schema evolution
+  - Implement event upgraders for migrating older event versions to current schemas
+  - Ensure backward compatibility where possible
+
+## Security Considerations
+
+- **Input Validation**:
+  - Validate all user input at the boundary of the system
+  - Sanitize potentially dangerous input, especially content that might be processed by AI components
+  - Implement appropriate rate limiting and size restrictions
+- **Authentication & Authorization**:
+  - Clearly separate authentication (who you are) from authorization (what you can do)
+  - Implement the principle of least privilege for all operations
+  - Use claims-based authorization for fine-grained access control
+
 ## General Performance Considerations
 
 - **Be Mindful of Resource Usage**:
