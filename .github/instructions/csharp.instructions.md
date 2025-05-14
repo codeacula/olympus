@@ -5,8 +5,8 @@ applyTo: "**/*.cs"
 ## 1. File Layout
 
 ```text
-Namespace
 Usings (System first, then third‑party, then project‑local)
+Namespace
 File‑scope namespace
 Type declarations
 
