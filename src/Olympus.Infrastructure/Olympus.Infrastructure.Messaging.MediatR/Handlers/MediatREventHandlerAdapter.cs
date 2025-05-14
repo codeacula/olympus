@@ -7,16 +7,11 @@ namespace Olympus.Infrastructure.Messaging.MediatR.Handlers;
 /// <summary>
 /// Adapts the Olympus event handler interface to MediatR's notification handler
 /// </summary>
-internal class MediatREventHandlerAdapter<TEvent>
+internal class MediatREventHandlerAdapter<TEvent>(IOlympusEventHandler<TEvent> handler)
     : INotificationHandler<OlympusEventToMediatRNotification<TEvent>>
     where TEvent : IOlympusEvent
 {
-  private readonly IOlympusEventHandler<TEvent> _handler;
-
-  public MediatREventHandlerAdapter(IOlympusEventHandler<TEvent> handler)
-  {
-    _handler = handler;
-  }
+  private readonly IOlympusEventHandler<TEvent> _handler = handler;
 
   public Task Handle(OlympusEventToMediatRNotification<TEvent> notification, CancellationToken cancellationToken)
   {

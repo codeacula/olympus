@@ -8,20 +8,15 @@ namespace Olympus.Infrastructure.Messaging.MediatR.Adapters;
 /// </summary>
 /// <typeparam name="TQuery">The Olympus query type</typeparam>
 /// <typeparam name="TResult">The result type</typeparam>
-internal class OlympusQueryToMediatRRequest<TQuery, TResult> : IRequest<TResult>
+/// <remarks>
+/// Creates a new adapter wrapping the specified query
+/// </remarks>
+/// <param name="query">The query to wrap</param>
+internal class OlympusQueryToMediatRRequest<TQuery, TResult>(TQuery query) : IRequest<TResult>
     where TQuery : IOlympusQuery<TResult>
 {
   /// <summary>
   /// The wrapped Olympus query
   /// </summary>
-  public TQuery Query { get; }
-
-  /// <summary>
-  /// Creates a new adapter wrapping the specified query
-  /// </summary>
-  /// <param name="query">The query to wrap</param>
-  public OlympusQueryToMediatRRequest(TQuery query)
-  {
-    Query = query;
-  }
+  public TQuery Query { get; } = query;
 }
