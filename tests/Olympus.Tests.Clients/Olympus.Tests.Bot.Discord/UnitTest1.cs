@@ -1,10 +1,10 @@
-﻿namespace Olympus.Tests.Bot.Discord;
+namespace Olympus.Tests.Bot.Discord;
 
 public class UnitTest1
 {
-    [Fact]
-    public void Test1()
-    {
+  [Fact]
+  public void Test1()
+  {
 
-    }
+  }
 }

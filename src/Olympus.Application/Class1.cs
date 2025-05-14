@@ -1,4 +1,4 @@
-﻿namespace Olympus.Application;
+namespace Olympus.Application;
 
 public class Class1
 {

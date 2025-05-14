@@ -1,10 +1,10 @@
-﻿namespace Olympus.Tests.Application;
+namespace Olympus.Tests.Application;
 
 public class UnitTest1
 {
-    [Fact]
-    public void Test1()
-    {
+  [Fact]
+  public void Test1()
+  {
 
-    }
+  }
 }

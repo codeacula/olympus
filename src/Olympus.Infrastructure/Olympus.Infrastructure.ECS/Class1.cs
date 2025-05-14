@@ -1,4 +1,4 @@
-﻿namespace Olympus.Infrastructure.ECS;
+namespace Olympus.Infrastructure.ECS;
 
 public class Class1
 {
