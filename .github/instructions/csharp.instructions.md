@@ -8,7 +8,7 @@ applyTo: "**/*.cs"
 ```text
 Usings (System first, then third‑party, then project‑local)
 Namespace
-File‑scope namespace
+File‑scoped namespace
 Type declarations
 
 ```

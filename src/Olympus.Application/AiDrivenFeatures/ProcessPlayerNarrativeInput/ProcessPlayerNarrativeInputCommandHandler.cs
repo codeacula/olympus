@@ -9,22 +9,15 @@ namespace Olympus.Application.AiDrivenFeatures.ProcessPlayerNarrativeInput;
 /// <summary>
 /// Handles the processing of player narrative input and returns an AI-generated response.
 /// </summary>
-public sealed class ProcessPlayerNarrativeInputCommandHandler
-    : IOlympusCommandHandler<ProcessPlayerNarrativeInputCommand, Result<NarrativeResponseDto, Error>>
+public sealed class ProcessPlayerNarrativeInputCommandHandler(
+    ISemanticKernelOrchestrator orchestrator,
+    IGameSessionNarrativeContextService contextService,
+    ILogger<ProcessPlayerNarrativeInputCommandHandler> logger)
+        : IOlympusCommandHandler<ProcessPlayerNarrativeInputCommand, Result<NarrativeResponseDto, Error>>
 {
-  private readonly ISemanticKernelOrchestrator _orchestrator;
-  private readonly IGameSessionNarrativeContextService _contextService;
-  private readonly ILogger<ProcessPlayerNarrativeInputCommandHandler> _logger;
-
-  public ProcessPlayerNarrativeInputCommandHandler(
-      ISemanticKernelOrchestrator orchestrator,
-      IGameSessionNarrativeContextService contextService,
-      ILogger<ProcessPlayerNarrativeInputCommandHandler> logger)
-  {
-    _orchestrator = orchestrator;
-    _contextService = contextService;
-    _logger = logger;
-  }
+  private readonly ISemanticKernelOrchestrator _orchestrator = orchestrator;
+  private readonly IGameSessionNarrativeContextService _contextService = contextService;
+  private readonly ILogger<ProcessPlayerNarrativeInputCommandHandler> _logger = logger;
 
   public async Task<Result<NarrativeResponseDto, Error>> HandleAsync(
       ProcessPlayerNarrativeInputCommand command,

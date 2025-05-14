@@ -64,3 +64,10 @@ applyTo: "**"
   3. The implementation satisfies the original requirements
   4. Tests are generated for the new functionality
 - If multiple implementation paths exist, make the decision that best aligns with existing patterns rather than waiting for input.
+
+## Standards
+
+- Always follow the [General Coding Standards](./instructions/general-coding.instructions.md)
+- When coding in C# (such as .cs files), use the [C# Coding Standards](./instructions/csharp.instructions.md)
+- When writing Markdown or .md files, use [Markdown Standards](./instructions/markdown.instructions.md)
+-
