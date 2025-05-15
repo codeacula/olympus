@@ -10,7 +10,7 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
     {
       if (_logger.IsEnabled(LogLevel.Information))
       {
-        WorkerLogging.LogWorkerRunning(_logger, DateTimeOffset.Now);
+        DiscordLogger.LogWorkerRunning(_logger, DateTimeOffset.Now);
       }
       await Task.Delay(1000, stoppingToken);
     }

@@ -4,4 +4,4 @@ namespace Olympus.Application.Common.Errors;
 /// Base record for representing errors in the application layer.
 /// </summary>
 /// <param name="Message"></param>
-public abstract record class Error(string Message);
+public abstract record class OlympusError(string Message);

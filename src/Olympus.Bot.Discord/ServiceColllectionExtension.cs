@@ -1,6 +1,7 @@
 using NetCord.Gateway;
 using NetCord.Hosting.Gateway;
 using NetCord.Hosting.Rest;
+using NetCord.Hosting.Services.ApplicationCommands;
 
 namespace Olympus.Bot.Discord;
 
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtensions
         | GatewayIntents.GuildMessageReactions
       )
       .AddDiscordRest()
+      .AddApplicationCommands()
       .AddGatewayEventHandlers(typeof(Program).Assembly);
     return services;
   }
