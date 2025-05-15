@@ -12,4 +12,12 @@ public static partial class DiscordLogger
   public static partial void LogWorkerRunning(
       ILogger logger,
       DateTimeOffset time);
+
+  [LoggerMessage(
+      Level = LogLevel.Information,
+      EventId = 2,
+      Message = "Discord Message Content: {Content}")]
+  public static partial void LogMessageContent(
+      ILogger logger,
+      string content);
 }
