@@ -10,7 +10,7 @@ public interface IOlympusDispatcher
   /// </summary>
   /// <typeparam name="TResult">The type of result expected from the command</typeparam>
   /// <param name="command">The command to dispatch</param>
-  /// <param name="cancellationToken">Cancellation token</param>
+  /// <param name="cancellationToken">Casncellation token</param>
   /// <returns>The result from the command handler</returns>
   Task<TResult> DispatchCommandAsync<TResult>(IOlympusCommand<TResult> command, CancellationToken cancellationToken = default);
 

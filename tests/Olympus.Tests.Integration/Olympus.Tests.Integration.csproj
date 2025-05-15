@@ -22,7 +22,7 @@
     <ProjectReference Include="..\..\src\Olympus.Api\Olympus.Api.csproj" />
     <ProjectReference Include="..\..\src\Olympus.Application\Olympus.Application.csproj" />
     <ProjectReference Include="..\..\src\Olympus.Domain\Olympus.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Olympus.Infrastructure.Messaging.MediatR\Olympus.Infrastructure.Messaging.MediatR.csproj" />
+    <ProjectReference Include="..\..\src\Olympus.Infrastructure\Olympus.Infrastructure.Messaging.MediatR\Olympus.Infrastructure.Messaging.MediatR.csproj" />
   </ItemGroup>
 
 </Project>
