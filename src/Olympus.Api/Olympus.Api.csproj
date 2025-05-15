@@ -11,12 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Olympus.Application\Olympus.Application.csproj" />
-    <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.Persistence.Marten\Olympus.Infrastructure.Persistence.Marten.csproj" />
+    <ProjectReference Include="..\Olympus.Application\Olympus.Application.csproj" />    <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.Persistence.Marten\Olympus.Infrastructure.Persistence.Marten.csproj" />
     <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.Caching.Redis\Olympus.Infrastructure.Caching.Redis.csproj" />
     <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.ECS\Olympus.Infrastructure.ECS.csproj" />
     <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.Ai\Olympus.Infrastructure.Ai.csproj" />
-    <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.Messaging.MediatR\Olympus.Infrastructure.Messaging.MediatR.csproj" />
+    <ProjectReference Include="..\Olympus.Infrastructure.Messaging.MediatR\Olympus.Infrastructure.Messaging.MediatR.csproj" />
     <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.CommonServices\Olympus.Infrastructure.CommonServices.csproj" />
   </ItemGroup>
 

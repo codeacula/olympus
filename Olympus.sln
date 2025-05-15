@@ -31,9 +31,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olympus.Api", "src\Olympus.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{9123F88B-E531-3118-42D7-ED8CEF4BD00E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olympus.Bot.Discord", "clients\Olympus.Bot.Discord\Olympus.Bot.Discord.csproj", "{398AEC6F-5C90-4594-9A3D-5C079F30E21B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olympus.Bot.Discord", "src\Olympus.Bot.Discord\Olympus.Bot.Discord.csproj", "{398AEC6F-5C90-4594-9A3D-5C079F30E21B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olympus.Bot.Twitch", "clients\Olympus.Bot.Twitch\Olympus.Bot.Twitch.csproj", "{5F43F646-20BD-498D-946C-0314C7D3014B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Olympus.Bot.Twitch", "src\Olympus.Bot.Twitch\Olympus.Bot.Twitch.csproj", "{5F43F646-20BD-498D-946C-0314C7D3014B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
 EndProject

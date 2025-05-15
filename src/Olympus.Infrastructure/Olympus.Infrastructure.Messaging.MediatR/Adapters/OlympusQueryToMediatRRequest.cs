@@ -12,7 +12,7 @@ namespace Olympus.Infrastructure.Messaging.MediatR.Adapters;
 /// Creates a new adapter wrapping the specified query
 /// </remarks>
 /// <param name="query">The query to wrap</param>
-internal class OlympusQueryToMediatRRequest<TQuery, TResult>(TQuery query) : IRequest<TResult>
+internal sealed class OlympusQueryToMediatRRequest<TQuery, TResult>(TQuery query) : IRequest<TResult>
     where TQuery : IOlympusQuery<TResult>
 {
   /// <summary>

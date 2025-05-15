@@ -41,6 +41,9 @@ public class ProcessPlayerNarrativeInputCommandHandlerTests
         new UserId("test-user"),
         "This is a test input");
 
+    // Note: In the current MVP implementation, the orchestrator is not used yet.
+    // The handler has its own simulated response generation logic.
+
     // Act
     var result = await _handler.HandleAsync(command, CancellationToken.None);
 
