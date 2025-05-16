@@ -7,32 +7,30 @@ namespace Olympus.Bot.Discord.Core;
 
 public sealed class DiscordGateway : IDisposable
 {
-  private readonly ApplicationCommandService<ApplicationCommandContext> _applicationCommandService = new();
+  private readonly ApplicationCommandService<ApplicationCommandContext> _applicationCommandService;
   private readonly ApplicationCommandServiceManager _applicationCommandServiceManager = new();
   private readonly DiscordSettings _discordSettings;
   private readonly GatewayClient _gatewayClient;
   private readonly ILogger<DiscordGateway> _logger;
 
-  public DiscordGateway(IOptions<DiscordSettings> discordSettings, ILogger<DiscordGateway> logger)
+  public DiscordGateway(IOptions<DiscordSettings> discordSettings, GatewayClient gatewayClient, ILogger<DiscordGateway> logger)
   {
     _discordSettings = discordSettings.Value;
     _logger = logger;
+    _gatewayClient = gatewayClient;
 
-    _gatewayClient = new GatewayClient(new BotToken(_discordSettings.BotToken), new()
-    {
-      Intents = GatewayIntents.AllNonPrivileged | GatewayIntents.MessageContent
-    });
     _gatewayClient.Ready += OnReadyAsync;
     _gatewayClient.Log += OnLogAsync;
-    _gatewayClient.MessageCreate += OnMessageCreate;
+    _gatewayClient.MessageCreate += OnMessageCreateAsync;
     _gatewayClient.InteractionCreate += OnNewInteractionAsync;
 
+    _applicationCommandService = new ApplicationCommandService<ApplicationCommandContext>();
     _applicationCommandService.AddModules(typeof(Program).Assembly);
 
     _applicationCommandServiceManager.AddService(_applicationCommandService);
   }
 
-  private ValueTask OnMessageCreate(Message message)
+  private ValueTask OnMessageCreateAsync(Message message)
   {
     DiscordLogger.LogMessageContent(_logger, message.Content);
     return default;
