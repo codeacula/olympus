@@ -1,8 +1,8 @@
 namespace Olympus.Bot.Discord;
 
-public class Worker(ILogger<Worker> logger) : BackgroundService
+public class DiscordBotWorker(ILogger<DiscordBotWorker> logger) : BackgroundService
 {
-  private readonly ILogger<Worker> _logger = logger;
+  private readonly ILogger<DiscordBotWorker> _logger = logger;
 
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
@@ -12,6 +12,8 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
       {
         DiscordLogger.LogWorkerRunning(_logger, DateTimeOffset.Now);
       }
+
+
       await Task.Delay(1000, stoppingToken);
     }
   }

@@ -25,7 +25,8 @@ public static class ServiceCollectionExtensions
 
   public static IHost AddDiscordServices(this IHost host)
   {
-    _ = host.UseGatewayEventHandlers();
+    _ = host
+      .UseGatewayEventHandlers();
     return host;
   }
 }
