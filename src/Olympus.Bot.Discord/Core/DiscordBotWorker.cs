@@ -1,4 +1,4 @@
-namespace Olympus.Bot.Discord;
+namespace Olympus.Bot.Discord.Core;
 
 public class DiscordBotWorker(ILogger<DiscordBotWorker> logger) : BackgroundService
 {
@@ -12,7 +12,6 @@ public class DiscordBotWorker(ILogger<DiscordBotWorker> logger) : BackgroundServ
       {
         DiscordLogger.LogWorkerRunning(_logger, DateTimeOffset.Now);
       }
-
 
       await Task.Delay(1000, stoppingToken);
     }

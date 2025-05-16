@@ -1,4 +1,5 @@
 using Olympus.Bot.Discord;
+using Olympus.Bot.Discord.Core;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddLogging(logging =>
 
 builder.Services.AddDiscordServices();
 
-builder.Services.AddHostedService<Worker>();
+builder.Services.AddHostedService<DiscordBotWorker>();
 
 var host = builder.Build();
 
