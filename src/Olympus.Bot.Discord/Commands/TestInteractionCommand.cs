@@ -1,12 +1,14 @@
-using NetCord.Services.Commands;
+using NetCord.Services.ApplicationCommands;
+using Olympus.Bot.Discord.Core;
 
 namespace Olympus.Bot.Discord.Commands;
 
-public class TestInteractionCommand : CommandModule<CommandContext>
+public class TestInteractionModule(ILogger<TestInteractionModule> logger) : BaseModule<TestInteractionModule>(logger)
 {
-  [Command("test-interaction")]
-  public static string TestCommand([CommandParameter(Remainder = true)] string interactionText)
+  [SlashCommand("testinteraction", "Test Olympus")]
+  public string TestCommand([SlashCommandParameter(Description = "The text to interact with")] string interactionText)
   {
+    Logger.LogInformation("Test command executed with text: {InteractionText}", interactionText);
     return $"Test command executed with text: {interactionText}";
   }
 }
