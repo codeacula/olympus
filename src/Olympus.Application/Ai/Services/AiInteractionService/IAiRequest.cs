@@ -1,3 +1,4 @@
 namespace Olympus.Application.Ai.Services.AiInteractionService;
 
-public interface IAiRequest;
+public interface IAiRequest<TResponseType>
+    where TResponseType : IAiResponse;

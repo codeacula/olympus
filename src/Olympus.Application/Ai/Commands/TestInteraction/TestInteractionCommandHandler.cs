@@ -1,4 +1,5 @@
-using Olympus.Application.Ai.Requests;
+using Olympus.Application.Ai.Errors;
+using Olympus.Application.Ai.Interactions.TalkWithGm;
 using Olympus.Application.Ai.Services.AiInteractionService;
 using Olympus.Application.Common.Messaging;
 using Olympus.Application.Common.Types;
@@ -17,8 +18,8 @@ public class TestInteractionCommandHandler(IAiInteractionService aiInteractionSe
 
     return aiResponse is null
       ? new OlympusResult<TestAiInteractionCommandResult, OlympusError>.Failure(
-          new OlympusError("Failed to get a valid AI response."))
-      : (OlympusResult<TestAiInteractionCommandResult, OlympusError>)new OlympusResult<TestAiInteractionCommandResult, OlympusError>.Success(
-        new TestAiInteractionCommandResult(ReplayTest: aiResponse));
+          new FailedToGetResponseError("Failed to get a valid AI response."))
+      : new OlympusResult<TestAiInteractionCommandResult, OlympusError>.Success(
+        new TestAiInteractionCommandResult(ReplayTest: aiResponse.ToString()!));
   }
 }
