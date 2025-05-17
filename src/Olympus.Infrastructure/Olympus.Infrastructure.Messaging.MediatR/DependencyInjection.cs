@@ -1,23 +1,11 @@
 using System.Reflection;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Olympus.Application.Common.Messaging;
-using Olympus.Infrastructure.Messaging.MediatR.Adapters;
 using Olympus.Infrastructure.Messaging.MediatR.Handlers;
 
 namespace Olympus.Infrastructure.Messaging.MediatR;
 
-/// <summary>
-/// Extension methods for registering MediatR messaging infrastructure in dependency injection
-/// </summary>
 public static class DependencyInjection
 {
-  /// <summary>
-  /// Adds MediatR-based messaging infrastructure to the service collection
-  /// </summary>
-  /// <param name="services">The service collection</param>
-  /// <param name="applicationAssembly">The assembly containing the command and query handlers</param>
-  /// <returns>The service collection for chaining</returns>
   public static IServiceCollection AddMediatRMessaging(
       this IServiceCollection services,
       Assembly applicationAssembly)

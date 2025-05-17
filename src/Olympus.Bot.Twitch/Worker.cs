@@ -10,7 +10,6 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
     {
       if (_logger.IsEnabled(LogLevel.Information))
       {
-        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
       }
       await Task.Delay(1000, stoppingToken);
     }
