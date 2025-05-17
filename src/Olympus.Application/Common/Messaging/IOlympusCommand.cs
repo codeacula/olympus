@@ -1,3 +1,3 @@
 namespace Olympus.Application.Common.Messaging;
 
-public interface IOlympusCommand;
+public interface IOlympusCommand<TResult>;
