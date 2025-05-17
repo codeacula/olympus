@@ -9,10 +9,10 @@ namespace Olympus.Infrastructure.Caching.Redis.Services;
 /// </summary>
 public sealed class RedisNarrativeContextCache : IGameSessionNarrativeContextService
 {
-  public ValueTask<Option<NarrativeContext>> GetContextAsync(string sessionId, CancellationToken cancellationToken = default)
+  public ValueTask<OlympusOption<NarrativeContext>> GetContextAsync(string sessionId, CancellationToken cancellationToken = default)
   {
     // TODO: Implement Redis fetch logic
-    return new ValueTask<Option<NarrativeContext>>(Option<NarrativeContext>.NoValue());
+    return new ValueTask<OlympusOption<NarrativeContext>>(OlympusOption<NarrativeContext>.NoValue());
   }
 
   public ValueTask SaveContextAsync(NarrativeContext context, CancellationToken cancellationToken = default)

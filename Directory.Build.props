@@ -15,6 +15,6 @@
     <BaseOutputPath>$(SolutionDir)artifacts\bin\</BaseOutputPath>
 
     <!-- All intermediate artifacts -->
-    <BaseIntermediateOutputPath>$(SolutionDir)artifacts\obj\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)artifacts\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
   </PropertyGroup>
 </Project>

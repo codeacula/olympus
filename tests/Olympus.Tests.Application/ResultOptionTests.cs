@@ -23,15 +23,15 @@ public class ResultOptionTests
   [Fact]
   public void Option_Some_ShouldContainValue()
   {
-    var option = Option<int>.SomeValue(99);
-    _ = Assert.IsType<Option<int>.Some>(option);
+    var option = OlympusOption<int>.SomeValue(99);
+    _ = Assert.IsType<OlympusOption<int>.Some>(option);
     Assert.Equal(99, option.Value);
   }
 
   [Fact]
   public void Option_None_ShouldBeNone()
   {
-    var option = Option<int>.NoValue();
-    _ = Assert.IsType<Option<int>.None>(option);
+    var option = OlympusOption<int>.NoValue();
+    _ = Assert.IsType<OlympusOption<int>.None>(option);
   }
 }

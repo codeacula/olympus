@@ -23,7 +23,7 @@ public class ProcessPlayerNarrativeInputCommandHandlerTests
     const string sessionId = "test-session";
     _ = _narrativeContextServiceMock
         .Setup(x => x.GetContextAsync(sessionId, It.IsAny<CancellationToken>()))
-        .ReturnsAsync(Option<NarrativeContext>.NoValue());
+        .ReturnsAsync(OlympusOption<NarrativeContext>.NoValue());
 
     // Create handler with mocked dependencies
     _handler = new ProcessPlayerNarrativeInputCommandHandler(
