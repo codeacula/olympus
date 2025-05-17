@@ -10,7 +10,7 @@ public interface IOlympusEventHandler<in TEvent>
   /// <summary>
   /// Handles the specified event
   /// </summary>
-  /// <param name="event">The event to process</param>
+  /// <param name="incomingEvent">The event to process</param>
   /// <param name="cancellationToken">Cancellation token</param>
-  Task HandleAsync(TEvent @event, CancellationToken cancellationToken);
+  Task HandleAsync(TEvent incomingEvent, CancellationToken cancellationToken);
 }
