@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Olympus.Api;
-using Olympus.Api.Services;
+using Olympus.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +13,11 @@ builder.Services.AddSwaggerGen(c =>
   c.SwaggerDoc("v1", new() { Title = "Olympus API", Version = "v1" });
   c.EnableAnnotations();
 });
-builder.Services.AddGrpc();
 
 builder.Services.AddHealthChecks()
     .AddCheck<SelfHealthCheck>("OlympusApi");
+
+builder.Services.AddOlympusServices();
 
 var app = builder.Build();
 
@@ -27,12 +28,13 @@ _ = app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.MapControllers();
-app.MapGrpcService<AiGrpcService>();
 app.MapGet("/", () => "Welcome to Olympus API!");
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
   Predicate = _ => true, // Include all checks
 });
+
+app.AddOlympusServices();
 
 app.Run();
 
