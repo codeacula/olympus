@@ -1,40 +1,20 @@
-using Olympus.Bot.Discord.Commands;
-using Olympus.Bot.Discord.Core;
+using NetCord.Hosting.Gateway;
+using NetCord.Hosting.Services;
+using NetCord.Hosting.Services.ApplicationCommands;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Configuration
-    .SetBasePath(AppContext.BaseDirectory)
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddUserSecrets(typeof(Program).Assembly, optional: true)
-    .AddEnvironmentVariables();
+builder.Services.AddLogging();
 
-builder.Services.AddLogging(logging =>
-{
-  _ = logging.ClearProviders()
-      .AddConsole()
-      .AddDebug()
-      .AddEventSourceLogger();
-});
+// builder.Services.AddHostedService<DiscordBotWorker>();
 
-var botToken = new BotToken(builder.Configuration["Discord:BotToken"] ?? "");
-
-builder.Services.AddOptions<DiscordSettings>()
-    .Bind(builder.Configuration.GetSection("Discord"))
-    .ValidateDataAnnotations();
 builder.Services
-  .AddSingleton<DiscordGateway>()
-  .AddSingleton(new GatewayClientConfiguration
-  {
-    Intents = GatewayIntents.AllNonPrivileged | GatewayIntents.MessageContent
-  })
-  .AddSingleton<IEntityToken>(botToken);
-builder.Services
-  .AddTransient<GatewayClient>()
-  .AddTransient<TestInteractionModule>();
-builder.Services.AddHostedService<DiscordBotWorker>();
+  .AddDiscordGateway()
+  .AddApplicationCommands();
 
 var host = builder.Build();
+
+host.AddModules(typeof(Program).Assembly);
+host.UseGatewayEventHandlers();
 
 await host.RunAsync();

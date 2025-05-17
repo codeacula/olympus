@@ -3,9 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Olympus.Tests.Integration;
 
-/// <summary>
-/// Base class for integration tests that configures a test host with mocked services
-/// </summary>
 public abstract class BaseIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
 {
   protected readonly WebApplicationFactory<Program> Factory;
@@ -26,10 +23,6 @@ public abstract class BaseIntegrationTest : IClassFixture<WebApplicationFactory<
     Client = Factory.CreateClient();
   }
 
-  /// <summary>
-  /// Override this method to configure specific services for your test
-  /// </summary>
-  /// <param name="services"></param>
   protected virtual void ConfigureTestServices(IServiceCollection services)
   {
     // Default implementation does nothing

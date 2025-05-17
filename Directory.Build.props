@@ -10,4 +10,11 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- All final outputs -->
+    <BaseOutputPath>$(SolutionDir)artifacts\bin\</BaseOutputPath>
+
+    <!-- All intermediate artifacts -->
+    <BaseIntermediateOutputPath>$(SolutionDir)artifacts\obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
 </Project>

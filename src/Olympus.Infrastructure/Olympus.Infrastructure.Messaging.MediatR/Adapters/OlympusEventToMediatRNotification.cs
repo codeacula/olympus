@@ -1,6 +1,3 @@
-using MediatR;
-using Olympus.Application.Common.Messaging;
-
 namespace Olympus.Infrastructure.Messaging.MediatR.Adapters;
 
 /// <summary>
