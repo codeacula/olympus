@@ -1,10 +1,8 @@
-using Olympus.Application.Ai.Interactions.TalkWithGm;
+using Olympus.Application.Grpc.Services;
 
 namespace Olympus.Application.Grpc;
 
 public interface IGrpcClient
 {
-  Task<TalkWithGmResponse> TalkWithGmAsync(
-    TalkWithGmRequest request,
-    CancellationToken cancellationToken = default);
+  IAiApiService AiApiService { get; }
 }

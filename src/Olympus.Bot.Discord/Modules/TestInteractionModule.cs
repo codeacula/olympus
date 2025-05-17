@@ -1,45 +1,37 @@
 using NetCord.Services.ApplicationCommands;
-using Olympus.Application.Ai.Commands.TestInteraction;
-using Olympus.Application.Common.Messaging;
+using Olympus.Application.Ai.Errors;
+using Olympus.Application.Ai.Interactions.TalkWithGm;
 using Olympus.Application.Common.Types;
+using Olympus.Application.Grpc;
 
 namespace Olympus.Bot.Discord.Modules;
 
 public abstract partial class TestInteractionModule(
-  IOlympusDispatcher dispatcher,
-  ILogger<TestInteractionModule> logger) : BaseInteractionModule<TestInteractionModule>(dispatcher, logger)
+    IGrpcClient grpcClient,
+    ILogger<TestInteractionModule> logger
+  ) : BaseInteractionModule<TestInteractionModule>(grpcClient, logger)
 {
   [SlashCommand("testinteraction", "Test Olympus")]
-  public async Task<string> TestInteractionAsync([SlashCommandParameter(Description = "The text to interact with")] string interactionText)
+  public async Task<string> TestInteractionAsync(string interactionText)
   {
-    var command = new TestInteractionCommand(interactionText);
+    var request = new TalkWithGmRequest(interactionText);
+    var response = await GrpcClient.AiApiService.TalkWithGmAsync(request);
 
-    var result = await Dispatcher.DispatchCommandAsync(command);
-
-    switch (result)
+    return response switch
     {
-      case OlympusResult<TestAiInteractionCommandResult, OlympusError>.Success success:
-        LogCommandExecuted(Logger, interactionText);
-        return success.Value.ReplayTest;
-
-      case OlympusResult<TestAiInteractionCommandResult, OlympusError>.Failure failure:
-        LogCommandError(Logger, failure.Error.Message!);
-        return $"Error: {failure.Error.Message}";
-
-      default:
-        return "Unknown result type";
-    }
+      OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Success s
+          => HandleSuccess<TalkWithGmResponse>(s.Value.Response),
+      OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Failure f
+          => HandleFailure(f.Error),
+      _ => throw new InvalidOperationException("Unexpected response state.")
+    };
   }
 
   [LoggerMessage(
-    Level = LogLevel.Information,
-    EventId = 0,
-    Message = "Test command executed with text: {InteractionText}")]
+      Level = LogLevel.Information,
+      EventId = 0,
+      Message = "Test command executed with text: {InteractionText}")]
   public static partial void LogCommandExecuted(ILogger logger, string interactionText);
 
-  [LoggerMessage(
-    Level = LogLevel.Error,
-    EventId = 1,
-    Message = "Test command result: {Result}")]
-  public static partial void LogCommandError(ILogger logger, string result);
+
 }
