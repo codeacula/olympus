@@ -1,11 +1,9 @@
-using Olympus.Application.Abstractions;
-
 namespace Olympus.Infrastructure.Messaging.MediatR;
 
 /// <summary>
 /// Publishes events using MediatR.
 /// </summary>
-public sealed class MediatREventPublisher : IEventPublisher
+public sealed class MediatREventPublisher : IOlympusEventPublisher
 {
   public ValueTask PublishAsync<TEvent>(TEvent incomingEvent, CancellationToken cancellationToken = default)
   {
