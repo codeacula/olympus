@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.31.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.72.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
     <PackageReference Include="NetCord" Version="1.0.0-alpha.367" />
     <PackageReference Include="NetCord.Hosting" Version="1.0.0-alpha.367" />
@@ -17,5 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Olympus.Application\Olympus.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\Olympus.Application\Protos\ai_service.proto" GrpcServices="Client" Link="Protos\ai_service.proto" />
   </ItemGroup>
 </Project>

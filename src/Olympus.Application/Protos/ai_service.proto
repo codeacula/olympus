@@ -1,0 +1,21 @@
+syntax = "proto3";
+option csharp_namespace = "Olympus.Application.Protos";
+
+package ai_service;
+import "google/protobuf/timestamp.proto";
+
+
+
+package narrative;
+
+service NarrativeService {
+  rpc GetNarrative (NarrativeRequest) returns (NarrativeResponse);
+}
+
+message NarrativeRequest {
+  string player_id = 1;
+}
+
+message NarrativeResponse {
+  string narrative_text = 1;
+}
