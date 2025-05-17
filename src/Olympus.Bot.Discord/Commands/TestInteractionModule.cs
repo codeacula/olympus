@@ -7,12 +7,13 @@ public partial class TestInteractionModule(ILogger<TestInteractionModule> logger
   private readonly ILogger<TestInteractionModule> _logger = logger;
 
   [SlashCommand("testinteraction", "Test Olympus")]
-  public void TestInteraction([SlashCommandParameter(Description = "The text to interact with")] string interactionText)
+  public string TestInteraction([SlashCommandParameter(Description = "The text to interact with")] string interactionText)
   {
     //LogTestCommandExecuted(_logger, interactionText);
 
     // Create TestInteractionCommand
     // Send the command to the service bus
+    return "Bless";
   }
 
   [LoggerMessage(
