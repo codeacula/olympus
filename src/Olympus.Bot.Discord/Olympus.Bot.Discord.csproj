@@ -15,4 +15,7 @@
     <PackageReference Include="NetCord.Hosting.Services" Version="1.0.0-alpha.367" />
     <PackageReference Include="NetCord.Services" Version="1.0.0-alpha.367" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Olympus.Application\Olympus.Application.csproj" />
+  </ItemGroup>
 </Project>

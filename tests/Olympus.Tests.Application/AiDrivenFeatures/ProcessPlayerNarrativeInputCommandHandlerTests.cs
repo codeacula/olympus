@@ -48,8 +48,8 @@ public class ProcessPlayerNarrativeInputCommandHandlerTests
     var result = await _handler.HandleAsync(command, CancellationToken.None);
 
     // Assert
-    Assert.True(result is Result<NarrativeResponseDto, Error>.Success);
-    var successResult = (Result<NarrativeResponseDto, Error>.Success)result;
+    Assert.True(result is OlympusResult<NarrativeResponseDto, OlympusError>.Success);
+    var successResult = (OlympusResult<NarrativeResponseDto, OlympusError>.Success)result;
     Assert.NotNull(successResult.Value);
     Assert.NotNull(successResult.Value.Response);
     Assert.Contains(command.Input, successResult.Value.Response);

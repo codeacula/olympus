@@ -9,14 +9,14 @@ namespace Olympus.Infrastructure.Ai.KernelServices;
 /// </summary>
 public sealed class SemanticKernelOrchestrator : ISemanticKernelOrchestrator
 {
-  public ValueTask<Result<NarrativeResponseDto, Error>> GenerateNarrativeAsync(
+  public ValueTask<OlympusResult<NarrativeResponseDto, OlympusError>> GenerateNarrativeAsync(
       string sessionId,
       string playerId,
       string inputText,
       CancellationToken cancellationToken = default)
   {
     // TODO: Implement actual orchestration logic
-    return new ValueTask<Result<NarrativeResponseDto, Error>>(
-        Result<NarrativeResponseDto, Error>.Fail(new Error("NotImplemented")));
+    return new ValueTask<OlympusResult<NarrativeResponseDto, OlympusError>>(
+        OlympusResult<NarrativeResponseDto, OlympusError>.Fail(new OlympusError("NotImplemented")));
   }
 }

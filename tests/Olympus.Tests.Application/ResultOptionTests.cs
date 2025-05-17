@@ -7,16 +7,16 @@ public class ResultOptionTests
   [Fact]
   public void Result_Ok_ShouldContainValue()
   {
-    var result = Result<int, string>.Ok(42);
-    _ = Assert.IsType<Result<int, string>.Success>(result);
+    var result = OlympusResult<int, string>.Ok(42);
+    _ = Assert.IsType<OlympusResult<int, string>.Success>(result);
     Assert.Equal(42, result.Value);
   }
 
   [Fact]
   public void Result_Fail_ShouldContainError()
   {
-    var result = Result<int, string>.Fail("error");
-    _ = Assert.IsType<Result<int, string>.Failure>(result);
+    var result = OlympusResult<int, string>.Fail("error");
+    _ = Assert.IsType<OlympusResult<int, string>.Failure>(result);
     Assert.Equal("error", result.Error);
   }
 

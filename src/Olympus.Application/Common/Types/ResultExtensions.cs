@@ -17,14 +17,14 @@ public static class ResultExtensions
   /// <returns>The result of either the success or failure function</returns>
   /// <exception cref="InvalidOperationException"></exception>
   public static TResult Match<TSuccess, TError, TResult>(
-      this Result<TSuccess, TError> result,
+      this OlympusResult<TSuccess, TError> result,
       Func<TSuccess, TResult> onSuccess,
       Func<TError, TResult> onFailure)
   {
     return result switch
     {
-      Result<TSuccess, TError>.Success success => onSuccess(success.Value),
-      Result<TSuccess, TError>.Failure failure => onFailure(failure.Error),
+      OlympusResult<TSuccess, TError>.Success success => onSuccess(success.Value),
+      OlympusResult<TSuccess, TError>.Failure failure => onFailure(failure.Error),
       _ => throw new InvalidOperationException($"Unknown result type: {result.GetType().Name}")
     };
   }
