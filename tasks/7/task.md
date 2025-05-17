@@ -15,3 +15,14 @@ I wanna be able to compose a request to open ai that sends the message from the 
 1. OpenAI returns a response
 1. AI service either issues and event or another command to the service bus
 1. Command handler for the event or command should send the response back to the correct discord server
+
+```mermaid
+flowchart TD
+    A[Discord Server] -->|Send Message| B[TestInteractionCommand]
+    B -->|Send to Service Bus| C[Service Bus]
+    C -->|Forward Request| D[AI Service]
+    D -->|Compose Prompt| E[OpenAI]
+    E -->|Return Response| D
+    D -->|Issue Event/Command| C
+    C -->|Send Response| A
+```
