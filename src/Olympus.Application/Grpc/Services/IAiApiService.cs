@@ -5,7 +5,5 @@ namespace Olympus.Application.Grpc.Services;
 
 public interface IAiApiService
 {
-  Task<TalkWithGmResponse> TalkWithGmAsync(
-    TalkWithGmRequest request,
-    CallContext callContext = default);
+  Task<TalkWithGmResponse> TalkWithGmAsync(TalkWithGmRequest request, CallContext callContext = default);
 }
