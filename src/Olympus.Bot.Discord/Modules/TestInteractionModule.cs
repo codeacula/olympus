@@ -1,7 +1,5 @@
 using NetCord.Services.ApplicationCommands;
-using Olympus.Application.Ai.Errors;
 using Olympus.Application.Ai.Interactions.TalkWithGm;
-using Olympus.Application.Common.Types;
 using Olympus.Application.Grpc;
 
 namespace Olympus.Bot.Discord.Modules;
@@ -12,19 +10,12 @@ public abstract partial class TestInteractionModule(
   ) : BaseInteractionModule<TestInteractionModule>(grpcClient, logger)
 {
   [SlashCommand("testinteraction", "Test Olympus")]
-  public async Task<string> TestInteractionAsync(string interactionText)
+  public async Task<string> TestInteractionAsync(string interactionText, CancellationToken cancellationToken)
   {
     var request = new TalkWithGmRequest(interactionText);
-    var response = await GrpcClient.AiApiService.TalkWithGmAsync(request);
+    var response = await GrpcClient.AiApiService.TalkWithGmAsync(request, cancellationToken);
 
-    return response switch
-    {
-      OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Success s
-          => HandleSuccess<TalkWithGmResponse>(s.Value.Response),
-      OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Failure f
-          => HandleFailure(f.Error),
-      _ => throw new InvalidOperationException("Unexpected response state.")
-    };
+    return response is null ? HandleFailure("Unknown error occurred") : response.Response;
   }
 
   [LoggerMessage(

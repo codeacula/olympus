@@ -16,21 +16,27 @@ public partial class GrpcExceptionInterceptor(ILogger<GrpcExceptionInterceptor> 
     try { return await continuation(request, context); }
     catch (OlympusValidationException ex)
     {
-
+      LogValidationException(_logger, ex.Message, ex);
       throw new RpcException(new Status(StatusCode.InvalidArgument, ex.Message));
     }
     catch (OlympusNotFoundException ex)
     {
+      LogNotFoundException(_logger, ex.Message, ex);
       throw new RpcException(new Status(StatusCode.NotFound, ex.Message));
     }
-    // ... other custom exceptions ...
     catch (Exception ex)
     {
-      _logger.LogError(ex, "Unhandled gRPC exception");
+      LogUnhandledException(_logger, ex);
       throw new RpcException(new Status(StatusCode.Internal, "Internal server error."));
     }
   }
 
-  [LoggerMessage(EventId = 1, Level = LogLevel.Error, Message = "Validation Exception: {Message}")]
-  public static partial void LogValidationException(string message, Exception ex);
+  [LoggerMessage(Level = LogLevel.Warning, Message = "Validation Exception: {Message}")]
+  public static partial void LogValidationException(ILogger logger, string message, Exception ex);
+
+  [LoggerMessage(Level = LogLevel.Warning, Message = "Not Found Exception: {Message}")]
+  public static partial void LogNotFoundException(ILogger logger, string message, Exception ex);
+
+  [LoggerMessage(Level = LogLevel.Error, Message = "Unhandled gRPC exception")]
+  public static partial void LogUnhandledException(ILogger logger, Exception ex);
 }

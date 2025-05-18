@@ -1,21 +1,16 @@
+using MediatR;
 using Microsoft.Extensions.Logging;
-using Olympus.Application.Ai.Errors;
 using Olympus.Application.Ai.Interactions.TalkWithGm;
-using Olympus.Application.Ai.Services.AiInteractionService;
-using Olympus.Application.Common.Types;
+using Olympus.Application.Common.Exceptions;
 
 namespace Olympus.Infrastructure.Ai.Handlers;
 
-internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logger) : IAiRequestHandler<TalkWithGmRequest, TalkWithGmResponse, FailedToGetResponseError>
+internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logger) : IRequestHandler<TalkWithGmRequest, TalkWithGmResponse>
 {
   private readonly ILogger<TalkWithGmHandler> _logger = logger;
-  public async Task<OlympusResult<TalkWithGmResponse, FailedToGetResponseError>> HandleRequestAsync(
-      TalkWithGmRequest request,
-      CancellationToken? cancellationToken = null)
+  public async Task<TalkWithGmResponse> Handle(TalkWithGmRequest request, CancellationToken cancellationToken)
   {
     ProcessingGmRequest(_logger, request.Message.Length);
-
-    var token = cancellationToken ?? CancellationToken.None;
 
     try
     {
@@ -24,14 +19,14 @@ internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logge
       var response = $"GM: I heard you say \"{request.Message}\". How can I help you with your adventure?";
 
       // Add a small delay to make this method truly async for demonstration purposes
-      await Task.Delay(1, token);
+      await Task.Delay(1, cancellationToken);
 
-      return new OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Success(new TalkWithGmResponse(response));
+      return new TalkWithGmResponse(response);
     }
     catch (Exception ex)
     {
       ErrorProcessingGmRequest(_logger, ex);
-      return new OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Failure(new FailedToGetResponseError("I apologize, but I'm having trouble responding right now."));
+      throw new OlympusInvalidResponseException("An error occurred while processing the GM request.", ex);
     }
   }
 

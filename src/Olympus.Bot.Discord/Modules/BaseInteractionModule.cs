@@ -1,5 +1,4 @@
 using NetCord.Services.ApplicationCommands;
-using Olympus.Application.Common.Types;
 using Olympus.Application.Grpc;
 
 namespace Olympus.Bot.Discord.Modules;
@@ -12,10 +11,10 @@ public abstract class BaseInteractionModule<TInteractionModuleType>(
   protected IGrpcClient GrpcClient { get; set; } = grpcClient;
   protected ILogger<TInteractionModuleType> Logger { get; set; } = logger;
 
-  protected string HandleFailure(OlympusError error)
+  protected string HandleFailure(string errorMsg)
   {
-    ModuleLogger.LogCommandError(Logger, error.ToString());
-    return $"An error occurred: {error.Message}";
+    ModuleLogger.LogCommandFailure(Logger, errorMsg);
+    return $"An error occurred: {errorMsg}";
   }
 
   protected string HandleSuccess<TResponseType>(string response)
