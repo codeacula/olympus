@@ -9,7 +9,7 @@ public class GrpcClient : IGrpcClient, IDisposable
   public IAiApiService AiApiService { get; }
   private readonly GrpcChannel _channel;
 
-  public GrpcClient(OlympusConfig config)
+  public GrpcClient(GrpcHost config)
   {
     _channel = GrpcChannel.ForAddress(config.ApiHost);
     AiApiService = _channel.CreateGrpcService<IAiApiService>();
