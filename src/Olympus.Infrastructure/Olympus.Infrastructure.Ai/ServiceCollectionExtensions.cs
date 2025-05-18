@@ -14,7 +14,6 @@ public static class ServiceCollectionExtensions
     _ = services.AddSingleton<IAiInteractionService, AiInteractionService>();
 
     // Register all AI request handlers
-    _ = services.AddTransient<IAiRequestHandler<TalkWithGmRequest, TalkWithGmResponse>, TalkWithGmHandler>();
 
     // Add additional handlers here as needed
 

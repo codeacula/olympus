@@ -1,13 +1,15 @@
 using Microsoft.Extensions.Logging;
+using Olympus.Application.Ai.Errors;
 using Olympus.Application.Ai.Interactions.TalkWithGm;
 using Olympus.Application.Ai.Services.AiInteractionService;
+using Olympus.Application.Common.Types;
 
 namespace Olympus.Infrastructure.Ai.Handlers;
 
-internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logger) : IAiRequestHandler<TalkWithGmRequest, TalkWithGmResponse>
+internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logger) : IAiRequestHandler<TalkWithGmRequest, TalkWithGmResponse, FailedToGetResponseError>
 {
   private readonly ILogger<TalkWithGmHandler> _logger = logger;
-  public async Task<TalkWithGmResponse> HandleRequestAsync(
+  public async Task<OlympusResult<TalkWithGmResponse, FailedToGetResponseError>> HandleRequestAsync(
       TalkWithGmRequest request,
       CancellationToken? cancellationToken = null)
   {
@@ -24,12 +26,12 @@ internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logge
       // Add a small delay to make this method truly async for demonstration purposes
       await Task.Delay(1, token);
 
-      return new TalkWithGmResponse(response);
+      return new OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Success(new TalkWithGmResponse(response));
     }
     catch (Exception ex)
     {
       ErrorProcessingGmRequest(_logger, ex);
-      return new TalkWithGmResponse("I apologize, but I'm having trouble responding right now.");
+      return new OlympusResult<TalkWithGmResponse, FailedToGetResponseError>.Failure(new FailedToGetResponseError("I apologize, but I'm having trouble responding right now."));
     }
   }
 

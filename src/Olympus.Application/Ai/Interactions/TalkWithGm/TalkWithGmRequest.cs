@@ -1,5 +1,3 @@
-using Olympus.Application.Ai.Services.AiInteractionService;
-
 namespace Olympus.Application.Ai.Interactions.TalkWithGm;
 
-public sealed record TalkWithGmRequest(string Message) : IAiRequest<TalkWithGmResponse>;
+public sealed record TalkWithGmRequest(string Message) : IRequest<TalkWithGmResponse>;

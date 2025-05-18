@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Olympus.Application.Common.Behaviors;
 using Olympus.Application.Grpc;
 using Olympus.Application.Grpc.Services;
 using ProtoBuf.Grpc.Server;
@@ -25,6 +26,11 @@ public static class ServiceCollectionExtension
   public static IServiceCollection AddOlympusServices(this IServiceCollection services)
   {
     _ = services.AddGrpcServices();
+    _ = services.AddMediatR(cfg => cfg
+        .RegisterServicesFromAssemblyContaining<OlympusConfig>()
+        .AddBehavior(typeof(ValidationBehavior<,>))
+        .AddBehavior(typeof(ErrorHandlingBehavior<,>))
+    );
     return services;
   }
 
