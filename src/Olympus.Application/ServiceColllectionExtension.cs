@@ -1,7 +1,5 @@
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Olympus.Application.Common.Behaviors;
 using Olympus.Application.Grpc;
 using Olympus.Application.Grpc.Services;

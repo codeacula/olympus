@@ -4,16 +4,16 @@ using Olympus.Application.Grpc;
 
 namespace Olympus.Bot.Discord.Modules;
 
-public abstract partial class TestInteractionModule(
+public partial class TestInteractionModule(
     IGrpcClient grpcClient,
     ILogger<TestInteractionModule> logger
   ) : BaseInteractionModule<TestInteractionModule>(grpcClient, logger)
 {
   [SlashCommand("testinteraction", "Test Olympus")]
-  public async Task<string> TestInteractionAsync(string interactionText, CancellationToken cancellationToken)
+  public async Task<string> TestInteractionAsync(string interactionText)
   {
     var request = new TalkWithGmRequest(interactionText);
-    var response = await GrpcClient.AiApiService.TalkWithGmAsync(request, cancellationToken);
+    var response = await GrpcClient.AiApiService.TalkWithGmAsync(request);
 
     return response is null ? HandleFailure("Unknown error occurred") : response.Response;
   }

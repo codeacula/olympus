@@ -3,6 +3,7 @@ using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
 using Olympus.Application;
 using Olympus.Application.Grpc;
+using Olympus.Bot.Discord.Modules;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -16,13 +17,13 @@ builder.Services.AddSingleton(new GrpcHost
 });
 
 builder.Services
+  .AddGrpcServices()
   .AddDiscordGateway()
-  .AddApplicationCommands()
-  .AddGrpcServices();
+  .AddApplicationCommands();
 
 var host = builder.Build();
 
-host.AddModules(typeof(Program).Assembly);
+host.AddModules(typeof(BaseInteractionModule<>).Assembly);
 host.UseGatewayEventHandlers();
 
 await host.RunAsync();
