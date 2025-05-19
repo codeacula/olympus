@@ -5,8 +5,10 @@ namespace Olympus.Application.Grpc.Services;
 
 public class AiApiService(IMediator mediator) : IAiApiService
 {
-  public ValueTask<TalkWithGmResponse> TalkWithGmAsync(TalkWithGmRequest request, CallContext callContext = default)
+  public async Task<TalkWithGmResponse> TalkWithGmAsync(TalkWithGmRequest request, CallContext callContext = default)
   {
-    return mediator.Send(request, callContext.CancellationToken);
+    var result = await mediator.Send(request, callContext.CancellationToken);
+
+    return result ?? throw new OlympusInvalidResponseException();
   }
 }
