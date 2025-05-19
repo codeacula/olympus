@@ -1,5 +1,3 @@
 namespace Olympus.Infrastructure.Ai;
 
-public class AiBrain
-{
-}
+public class AiBrain;

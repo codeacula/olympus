@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Olympus.Application.Ai.Services;
 using Olympus.Application.Common.Behaviors;
-using Olympus.Application.Grpc;
-using Olympus.Application.Grpc.Services;
+using Olympus.Application.Common.Grpc;
 using ProtoBuf.Grpc.Server;
 
 namespace Olympus.Application;
@@ -19,7 +19,7 @@ public static class ServiceCollectionExtension
 
   public static WebApplication AddGrpcServices(this WebApplication builder)
   {
-    _ = builder.MapGrpcService<AiApiService>();
+    _ = builder.MapGrpcService<AiGrpcService>();
     return builder;
   }
 
@@ -27,7 +27,7 @@ public static class ServiceCollectionExtension
   {
     _ = services.AddGrpcServices();
     _ = services.AddMediatR(cfg => cfg
-        .RegisterServicesFromAssemblyContaining<OlympusConfig>()
+        .RegisterServicesFromAssemblyContaining<GrpcClient>()
         .AddBehavior(typeof(ValidationBehavior<,>))
         .AddBehavior(typeof(ErrorHandlingBehavior<,>))
     );

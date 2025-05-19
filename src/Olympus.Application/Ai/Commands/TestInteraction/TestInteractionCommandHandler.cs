@@ -1,5 +1,5 @@
 using Olympus.Application.Ai.Interactions.TalkWithGm;
-using Olympus.Application.Grpc;
+using Olympus.Application.Common.Grpc;
 
 namespace Olympus.Application.Ai.Commands.TestInteraction;
 
