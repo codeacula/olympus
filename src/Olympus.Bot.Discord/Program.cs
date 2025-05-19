@@ -2,19 +2,16 @@ using NetCord.Hosting.Gateway;
 using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
 using Olympus.Application;
-using Olympus.Application.Grpc;
+using Olympus.Application.Common.Grpc;
 using Olympus.Bot.Discord.Modules;
 
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services.AddLogging();
 
-builder.Services.AddSingleton(new GrpcHost
-{
-  Host = "localhost",
-  Port = 5000,
-  UseHttps = false
-});
+builder.Services.Configure<GrpcHostConfig>(
+  builder.Configuration.GetSection(nameof(GrpcHostConfig))
+);
 
 builder.Services
   .AddGrpcServices()

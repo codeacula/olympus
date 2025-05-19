@@ -1,9 +1,9 @@
 using Olympus.Application.Ai.Interactions.TalkWithGm;
 using ProtoBuf.Grpc;
 
-namespace Olympus.Application.Grpc.Services;
+namespace Olympus.Application.Ai.Services;
 
-public class AiApiService(IMediator mediator) : IAiApiService
+public class AiGrpcService(IMediator mediator) : IAiGrpcService
 {
   public async Task<TalkWithGmResponse> TalkWithGmAsync(TalkWithGmRequest request, CallContext callContext = default)
   {

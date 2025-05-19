@@ -2,7 +2,7 @@ using System.ServiceModel;
 using Olympus.Application.Ai.Interactions.TalkWithGm;
 using ProtoBuf.Grpc;
 
-namespace Olympus.Application.Grpc.Services;
+namespace Olympus.Application.Ai.Services;
 
 [ServiceContract]
 public interface IAiApiService
