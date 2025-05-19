@@ -1,9 +1,11 @@
+using System.ServiceModel;
 using Olympus.Application.Ai.Interactions.TalkWithGm;
 using ProtoBuf.Grpc;
 
 namespace Olympus.Application.Grpc.Services;
 
+[ServiceContract]
 public interface IAiApiService
 {
-  Task<TalkWithGmResponse> TalkWithGmAsync(TalkWithGmRequest request, CallContext callContext = default);
+  ValueTask<TalkWithGmResponse> TalkWithGmAsync(TalkWithGmRequest request, CallContext callContext = default);
 }

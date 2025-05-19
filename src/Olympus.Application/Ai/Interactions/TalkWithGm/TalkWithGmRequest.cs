@@ -1,3 +1,17 @@
+using System.Runtime.Serialization;
+
 namespace Olympus.Application.Ai.Interactions.TalkWithGm;
 
-public sealed record TalkWithGmRequest(string Message) : IRequest<TalkWithGmResponse>;
+[DataContract]
+public sealed record TalkWithGmRequest : IRequest<TalkWithGmResponse>
+{
+  [DataMember(Order = 1)]
+  public string InteractionText { get; init; } = string.Empty;
+
+  public TalkWithGmRequest(string interactionText)
+  {
+    InteractionText = interactionText;
+  }
+
+  public override string ToString() => $"InteractionText: {InteractionText}";
+}
