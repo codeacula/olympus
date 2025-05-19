@@ -10,15 +10,15 @@ internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logge
   private readonly ILogger<TalkWithGmHandler> _logger = logger;
   public async Task<TalkWithGmResponse> Handle(TalkWithGmRequest request, CancellationToken cancellationToken)
   {
-    ProcessingGmRequest(_logger, request.Message.Length);
+    ProcessingGmRequest(_logger, request.InteractionText.Length);
 
     try
     {
       // In a real implementation, you would use Semantic Kernel to process the request
       // This is a placeholder implementation
-      var response = $"GM: I heard you say \"{request.Message}\". How can I help you with your adventure?";
+      var response = $"GM: I heard you say \"{request.InteractionText}\". How can I help you with your adventure?";
 
-      // Add a small delay to make this method truly async for demonstration purposes
+      // Add a small delay to make this method truly async for demonstrati  on purposes
       await Task.Delay(1, cancellationToken);
 
       return new TalkWithGmResponse(response);

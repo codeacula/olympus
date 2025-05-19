@@ -1,0 +1,10 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+services:
+  olympusapi:
+    image: olympusapi
+    build:
+      context: .
+      dockerfile: src/Olympus.Api/Dockerfile
+    ports:
+      - 5034:5034
