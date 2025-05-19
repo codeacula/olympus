@@ -9,7 +9,7 @@ var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services.AddLogging();
 
-builder.Services.AddSingleton(new GrpcHost
+builder.Services.AddSingleton(new GrpcHostConfig
 {
   Host = "localhost",
   Port = 5000,

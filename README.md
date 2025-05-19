@@ -28,7 +28,7 @@ The initial MVP enables a single player to narrate actions via a Discord command
 
 ## 🛠️ Development
 
-- C#/.NET 8
+- C#/.NET 9
 - Redis
 - PostgreSQL (via Marten)
 - Semantic Kernel
@@ -43,4 +43,3 @@ The initial MVP enables a single player to narrate actions via a Discord command
 - Issues and feature requests welcome!
 - Be kind, inclusive, and constructive.
 - Join the conversation on **Discord**: [invite link here]
-

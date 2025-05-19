@@ -1,6 +1,6 @@
 namespace Olympus.Application.Grpc;
 
-public sealed record GrpcHost
+public sealed record GrpcHostConfig
 {
   public required string Host { get; init; }
   public required int Port { get; init; }
