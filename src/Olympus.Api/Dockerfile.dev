@@ -1,0 +1,27 @@
+# Olympus.Api - Development Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS dev
+WORKDIR /src
+
+# Install vsdbg
+RUN apt-get update && apt-get install -y --no-install-recommends unzip curl \
+    && curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l /vsdbg
+
+RUN dotnet dev-certs https
+RUN dotnet dev-certs https --trust
+
+# Copy solution and project files for dependency restore
+COPY Olympus.sln .
+COPY src/Olympus.Api/*.csproj src/Olympus.Api/
+COPY src/Olympus.Application/*.csproj src/Olympus.Application/
+COPY src/Olympus.Infrastructure/*/*.csproj src/Olympus.Infrastructure/
+RUN dotnet restore src/Olympus.Api/Olympus.Api.csproj
+
+# (No source code COPY here; code will be mounted from host in docker-compose for hot reload)
+
+# Set development environment variables for ASP.NET Core
+ENV ASPNETCORE_ENVIRONMENT=Development \
+    DOTNET_USE_POLLING_FILE_WATCHER=1 \
+    DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=1
+
+# Run the API with hot-reload enabled
+CMD ["dotnet", "watch", "run", "--project", "src/Olympus.Api/Olympus.Api.csproj"]

@@ -1,19 +1,23 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS dev
+# Olympus.Bot.Discord - Production Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Restore packages for Discord bot (and any shared projects it needs)
+COPY Olympus.sln .
+COPY src/Olympus.Bot.Discord/*.csproj src/Olympus.Bot.Discord/
+COPY src/Olympus.Application/*.csproj src/Olympus.Application/
+RUN dotnet restore src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj
+
+# Build and publish the service
+COPY . .
+RUN dotnet publish src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj -c Release -o /app/out
+
+# Runtime stage with .NET (no ASP.NET needed for a worker service)
+FROM mcr.microsoft.com/dotnet/runtime:8.0 AS runtime
 WORKDIR /app
 
-# Copy csproj and restore dependencies
-COPY ["src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj", "src/Olympus.Bot.Discord/"]
-COPY ["Directory.Build.props", "./"]
-RUN dotnet restore "src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj"
+COPY --from=build /app/out ./
+ENV DOTNET_ENVIRONMENT=Production
 
-# Copy the application source code
-COPY ["src/Olympus.Application/", "src/Olympus.Application/"]
-COPY ["src/Olympus.Domain/", "src/Olympus.Domain/"]
-COPY ["src/Olympus.Bot.Discord/", "src/Olympus.Bot.Discord/"]
-
-# Add metadata labels
-LABEL description="Development container for Olympus Discord Bot"
-LABEL project="olympus"
-
-# Use dotnet watch for hot reload
-ENTRYPOINT ["dotnet", "watch", "run", "--project", "src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj"]
+# Run the Discord bot service
+ENTRYPOINT ["dotnet", "Olympus.Bot.Discord.dll"]
