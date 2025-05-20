@@ -1,13 +1,13 @@
 {
-    "configurations": [
-        {
-            "name": "Containers: .NET Launch",
-            "type": "docker",
-            "request": "launch",
-            "preLaunchTask": "docker-run: debug",
-            "netCore": {
-                "appProject": "${workspaceFolder}/src/Olympus.Api/Olympus.Api.csproj"
-            }
-        }
-    ]
+  "configurations": [
+    {
+      "name": "Containers: .NET Launch",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-run: debug",
+      "netCore": {
+        "appProject": "${workspaceFolder}/src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj"
+      }
+    }
+  ]
 }

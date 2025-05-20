@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>NetCord</id>
+    <version>1.0.0-alpha.367</version>
+    <authors>NetCord</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>SmallSquare.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://netcord.dev/</projectUrl>
+    <description>The modern and fully customizable C# Discord library.</description>
+    <tags>bot discord discord-api</tags>
+    <repository type="git" url="https://github.com/NetCordDev/NetCord" commit="3dd7204b344700882891728c124e0a388c878475" />
+    <dependencies>
+      <group targetFramework="net8.0" />
+    </dependencies>
+  </metadata>
+</package>

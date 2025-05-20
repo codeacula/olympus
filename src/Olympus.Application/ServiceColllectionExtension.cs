@@ -28,8 +28,8 @@ public static class ServiceCollectionExtension
     _ = services.AddGrpcServices();
     _ = services.AddMediatR(cfg => cfg
         .RegisterServicesFromAssemblyContaining<GrpcClient>()
-        .AddBehavior(typeof(ValidationBehavior<,>))
-        .AddBehavior(typeof(ErrorHandlingBehavior<,>))
+        .AddOpenBehavior(typeof(ValidationBehavior<,>))
+        .AddOpenBehavior(typeof(ErrorHandlingBehavior<,>))
     );
     return services;
   }

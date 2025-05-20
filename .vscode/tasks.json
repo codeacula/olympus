@@ -10,12 +10,12 @@
 			"dockerBuild": {
 				"tag": "olympus:dev",
 				"target": "base",
-				"dockerfile": "${workspaceFolder}/src/Olympus.Api/Dockerfile",
+				"dockerfile": "${workspaceFolder}/src/Olympus.Bot.Discord/Dockerfile",
 				"context": "${workspaceFolder}",
 				"pull": true
 			},
 			"netCore": {
-				"appProject": "${workspaceFolder}/src/Olympus.Api/Olympus.Api.csproj"
+				"appProject": "${workspaceFolder}/src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj"
 			}
 		},
 		{
@@ -26,16 +26,16 @@
 			],
 			"dockerBuild": {
 				"tag": "olympus:latest",
-				"dockerfile": "${workspaceFolder}/src/Olympus.Api/Dockerfile",
+				"dockerfile": "${workspaceFolder}/src/Olympus.Bot.Discord/Dockerfile",
 				"context": "${workspaceFolder}",
 				"platform": {
-					"os": "windows",
+					"os": "linux",
 					"architecture": "amd64"
 				},
 				"pull": true
 			},
 			"netCore": {
-				"appProject": "${workspaceFolder}/src/Olympus.Api/Olympus.Api.csproj"
+				"appProject": "${workspaceFolder}/src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj"
 			}
 		},
 		{
@@ -44,11 +44,9 @@
 			"dependsOn": [
 				"docker-build: debug"
 			],
-			"dockerRun": {
-				"os": "Windows"
-			},
+			"dockerRun": {},
 			"netCore": {
-				"appProject": "${workspaceFolder}/src/Olympus.Api/Olympus.Api.csproj",
+				"appProject": "${workspaceFolder}/src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj",
 				"enableDebugging": true
 			}
 		},
@@ -58,11 +56,9 @@
 			"dependsOn": [
 				"docker-build: release"
 			],
-			"dockerRun": {
-				"os": "Windows"
-			},
+			"dockerRun": {},
 			"netCore": {
-				"appProject": "${workspaceFolder}/src/Olympus.Api/Olympus.Api.csproj"
+				"appProject": "${workspaceFolder}/src/Olympus.Bot.Discord/Olympus.Bot.Discord.csproj"
 			}
 		}
 	]

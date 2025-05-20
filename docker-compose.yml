@@ -1,10 +1,61 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+version: '3.8'
 
 services:
-  olympusapi:
-    image: olympusapi
+  olympus-api:
     build:
       context: .
       dockerfile: src/Olympus.Api/Dockerfile
+      args:
+        configuration: Development
     ports:
-      - 5034:5034
+      - "5034:5034"
+      - "7101:7101"
+    volumes:
+      - ./src:/src
+      - ~/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - ASPNETCORE_URLS=http://+:5034;https://+:7101
+      - DOTNET_RUNNING_IN_CONTAINER=true
+    restart: unless-stopped
+
+  olympus-bot-discord:
+    build:
+      context: .
+      dockerfile: src/Olympus.Bot.Discord/Dockerfile
+      target: dev
+    volumes:
+      - ./:/app:rw
+      - ~/.vsdbg:/remote_debugger:rw
+      - ~/.nuget/packages:/root/.nuget/packages:ro
+    env_file:
+      - .env.development
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: olympus_dev_password
+      POSTGRES_USER: olympus_dev
+      POSTGRES_DB: olympus
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    driver: bridge
+    name: olympus_network
