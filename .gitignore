@@ -53,3 +53,4 @@ nunit-*.xml
 
 .env
 .env.development
+%USER_PROFILE%
