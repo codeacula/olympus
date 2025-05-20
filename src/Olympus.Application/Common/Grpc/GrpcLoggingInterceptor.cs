@@ -1,7 +1,8 @@
 using Grpc.Core;
 using Grpc.Core.Interceptors;
+using Microsoft.Extensions.Logging;
 
-namespace Olympus.Bot.Discord.Interceptors;
+namespace Olympus.Application.Common.Grpc;
 
 internal sealed partial class GrpcLoggingInterceptor(ILogger<GrpcLoggingInterceptor> log) : Interceptor
 {
