@@ -11,7 +11,8 @@ public static class ServiceCollectionExtension
 {
   public static IServiceCollection AddGrpcServices(this IServiceCollection services)
   {
-    _ = services.AddSingleton<IGrpcClient, GrpcClient>();
+    _ = services.AddSingleton<IGrpcClient, GrpcClient>()
+      .AddSingleton<GrpcClientLoggingInterceptor>();
 
     services.AddCodeFirstGrpc();
     return services;

@@ -4,9 +4,9 @@ WORKDIR /src
 
 # Copy solution and project files, restore dependencies
 COPY Olympus.sln .
-COPY clients/Olympus.Bot.Twitch/*.csproj clients/Olympus.Bot.Twitch/
+COPY src/Olympus.Bot.Twitch/*.csproj src/Olympus.Bot.Twitch/
 COPY src/Olympus.Application/*.csproj src/Olympus.Application/
-RUN dotnet restore clients/Olympus.Bot.Twitch/Olympus.Bot.Twitch.csproj
+RUN dotnet restore src/Olympus.Bot.Twitch/Olympus.Bot.Twitch.csproj
 
 # (Source code will be mounted at runtime for hot-reload)
 
@@ -15,4 +15,4 @@ ENV DOTNET_ENVIRONMENT=Development \
     DOTNET_USE_POLLING_FILE_WATCHER=1
 
 # Run the Twitch bot with hot-reload
-CMD ["dotnet", "watch", "run", "--project", "clients/Olympus.Bot.Twitch/Olympus.Bot.Twitch.csproj"]
+CMD ["dotnet", "watch", "run", "--project", "src/Olympus.Bot.Twitch/Olympus.Bot.Twitch.csproj"]

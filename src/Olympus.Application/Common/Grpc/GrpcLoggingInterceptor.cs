@@ -57,6 +57,6 @@ internal sealed partial class GrpcLoggingInterceptor(ILogger<GrpcLoggingIntercep
   [LoggerMessage(
     EventId = 3,
     Level = LogLevel.Error,
-    Message = "gRPC ← {Method} failed: {@Error}")]
-  private static partial void LogError(ILogger logger, string method, Exception error);
+    Message = "gRPC ← {Method} failed")]
+  private static partial void LogError(ILogger logger, string method, Exception incException);
 }

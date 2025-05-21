@@ -11,6 +11,7 @@ public class GrpcClient : IGrpcClient, IDisposable
 {
   public IAiGrpcService AiApiService { get; }
   private readonly GrpcChannel _channel;
+  private readonly ILogger<GrpcClient> _logger;
 
   public GrpcClient(IOptions<GrpcHostConfig> config, GrpcLoggingInterceptor grpcLoggingInterceptor)
   {
