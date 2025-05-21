@@ -1,13 +1,9 @@
-using System.Net.Security;
-using Grpc.Net.Client;
-using Microsoft.Extensions.Options;
 using NetCord.Hosting.Gateway;
 using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
 using Olympus.Application;
 using Olympus.Application.Common.Grpc;
 using Olympus.Bot.Discord.Modules;
-using ProtoBuf.Grpc.Client;
 
 var builder = Host.CreateApplicationBuilder(args);
 
