@@ -1,19 +1,23 @@
 using Microsoft.Extensions.Logging;
+using Olympus.Application.Ai.Interfaces;
 
 namespace Olympus.Application.Grpc.Ai.GreetGm;
 
-internal sealed partial class GreetGmHandler(ILogger<GreetGmHandler> logger) : IRequestHandler<GreetGmRequest, GreetGmResponse>
+internal sealed partial class GreetGmHandler(ILogger<GreetGmHandler> logger, ITheOrb theOrb) : IRequestHandler<GreetGmRequest, GreetGmResponse>
 {
   private readonly ILogger<GreetGmHandler> _logger = logger;
+  private readonly ITheOrb _theOrb = theOrb;
+
   public async Task<GreetGmResponse> Handle(GreetGmRequest request, CancellationToken cancellationToken)
   {
     ProcessingRequest(_logger, request.InteractionText.Length);
 
     try
     {
-      // TODO: Implement actual greeting logic
-      var response = $"Hello, GM! You said: {request.InteractionText}";
-      return new GreetGmResponse(response);
+      var response = await _theOrb.GreetGmAsync(new(request.InteractionText));
+      return string.IsNullOrEmpty(response.Response)
+        ? throw new OlympusInvalidResponseException("The response from the AI is empty or null.")
+        : new GreetGmResponse(new(response.Response));
     }
     catch (Exception ex)
     {
