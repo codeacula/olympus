@@ -1,11 +1,11 @@
-using System.Runtime.Serialization;
+using ProtoBuf;
 
 namespace Olympus.Application.Ai.Interactions.TalkWithGm;
 
-[DataContract]
+[ProtoContract]
 public sealed record TalkWithGmRequest : IRequest<TalkWithGmResponse>
 {
-  [DataMember(Order = 1)]
+  [ProtoMember(1)]
   public string InteractionText { get; init; } = string.Empty;
 
   public TalkWithGmRequest() { }
