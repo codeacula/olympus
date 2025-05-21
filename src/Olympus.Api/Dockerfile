@@ -14,7 +14,7 @@ COPY . .
 RUN dotnet publish src/Olympus.Api/Olympus.Api.csproj -c Release -o /app/out
 
 # Use a smaller runtime image for the final stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
 # Copy published output from build stage
