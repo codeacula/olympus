@@ -1,5 +1,3 @@
-using ProtoBuf;
-
 namespace Olympus.Application.Grpc.Ai.TalkWithGm;
 
 [ProtoContract]
@@ -14,6 +12,4 @@ public sealed record TalkWithGmResponse
   {
     Response = response;
   }
-
-  public override string ToString() => $"Response: {Response}";
 }

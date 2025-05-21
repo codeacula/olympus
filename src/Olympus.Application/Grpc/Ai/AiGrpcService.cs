@@ -6,8 +6,13 @@ public class AiGrpcService(IMediator mediator) : IAiGrpcService
 {
   public async Task<TalkWithGmResponse> TalkWithGmAsync(TalkWithGmRequest request, CancellationToken cancellationToken = default)
   {
-    var result = await mediator.Send(request, cancellationToken);
+    ArgumentNullException.ThrowIfNull(request);
 
-    return result ?? throw new OlympusInvalidResponseException();
+    var command = new TalkWithGmCommand(request.InteractionText);
+    var result = await mediator.Send(command, cancellationToken);
+
+    var response = new TalkWithGmResponse(result.Response);
+
+    return response ?? throw new OlympusInvalidResponseException();
   }
 }

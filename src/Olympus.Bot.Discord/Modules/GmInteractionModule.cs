@@ -4,13 +4,13 @@ using Olympus.Application.Grpc.Ai.TalkWithGm;
 
 namespace Olympus.Bot.Discord.Modules;
 
-public partial class TestInteractionModule(
+public partial class GmInteractionModule(
     IGrpcClient grpcClient,
-    ILogger<TestInteractionModule> logger
-  ) : BaseInteractionModule<TestInteractionModule>(grpcClient, logger)
+    ILogger<GmInteractionModule> logger
+  ) : BaseInteractionModule<GmInteractionModule>(grpcClient, logger)
 {
-  [SlashCommand("testinteraction", "Test Olympus")]
-  public async Task<string> TestInteractionAsync(string interactionText)
+  [SlashCommand("greet", "Greet the GM")]
+  public async Task<string> GreetAsync(string interactionText)
   {
     var request = new TalkWithGmRequest(interactionText);
     var response = await GrpcClient.AiApiService.TalkWithGmAsync(request);
@@ -20,6 +20,6 @@ public partial class TestInteractionModule(
 
   [LoggerMessage(
       Level = LogLevel.Information,
-      Message = "Test command executed with text: {InteractionText}")]
+      Message = "Greet command executed with text: {InteractionText}")]
   public static partial void LogCommandExecuted(ILogger logger, string interactionText);
 }

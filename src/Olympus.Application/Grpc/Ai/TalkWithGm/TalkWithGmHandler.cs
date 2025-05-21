@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
-using Olympus.Application.Grpc.Ai.TalkWithGm;
 
-namespace Olympus.Application.Ai.Interactions.TalkWithGm;
+namespace Olympus.Application.Grpc.Ai.TalkWithGm;
 
 internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logger) : IRequestHandler<TalkWithGmRequest, TalkWithGmResponse>
 {

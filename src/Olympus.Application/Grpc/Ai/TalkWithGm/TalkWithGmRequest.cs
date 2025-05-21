@@ -1,5 +1,3 @@
-using ProtoBuf;
-
 namespace Olympus.Application.Grpc.Ai.TalkWithGm;
 
 [ProtoContract]
@@ -14,6 +12,4 @@ public sealed record TalkWithGmRequest : IRequest<TalkWithGmResponse>
   {
     InteractionText = interactionText;
   }
-
-  public override string ToString() => $"InteractionText: {InteractionText}";
 }
