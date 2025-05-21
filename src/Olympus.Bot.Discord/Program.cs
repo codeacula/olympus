@@ -38,6 +38,7 @@ builder.Services.AddSingleton(services =>
   var channelOptions = new GrpcChannelOptions
   {
     LoggerFactory = loggerFactory,
+    ServiceProvider = services,
     HttpHandler = new SocketsHttpHandler
     {
       MaxConnectionsPerServer = 100,
@@ -46,7 +47,7 @@ builder.Services.AddSingleton(services =>
       SslOptions = new SslClientAuthenticationOptions
       {
         EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12,
-        RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true,
+        RemoteCertificateValidationCallback = (_, _, _, _) => true,
       },
     },
   };

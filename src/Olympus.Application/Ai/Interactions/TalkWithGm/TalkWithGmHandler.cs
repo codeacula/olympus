@@ -1,9 +1,6 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
-using Olympus.Application.Ai.Interactions.TalkWithGm;
-using Olympus.Application.Common.Exceptions;
 
-namespace Olympus.Infrastructure.Ai.Handlers;
+namespace Olympus.Application.Ai.Interactions.TalkWithGm;
 
 internal sealed partial class TalkWithGmHandler(ILogger<TalkWithGmHandler> logger) : IRequestHandler<TalkWithGmRequest, TalkWithGmResponse>
 {

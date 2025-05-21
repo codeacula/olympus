@@ -9,7 +9,7 @@ internal sealed class TestInteractionCommandHandler(IGrpcClient grpcClient) : IR
   {
     var aiRequest = new TalkWithGmRequest(request.InteractionText);
 
-    var aiResponse = await grpcClient.AiApiService.TalkWithGmAsync(aiRequest, cancellationToken ) ??
+    var aiResponse = await grpcClient.AiApiService.TalkWithGmAsync(aiRequest, cancellationToken) ??
       throw new OlympusInvalidResponseException("AI response is null.");
 
     return new TestInteractionResult(Message: aiResponse.ToString()!);

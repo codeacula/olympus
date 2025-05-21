@@ -6,7 +6,6 @@ public static class ServiceCollectionExtensions
 {
   public static IServiceCollection AddAiInfrastructure(this IServiceCollection services)
   {
-
     return services;
   }
 }

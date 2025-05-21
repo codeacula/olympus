@@ -1,7 +1,5 @@
 using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Olympus.Application.Ai.Services;
 using ProtoBuf.Grpc.Client;
 
@@ -11,12 +9,11 @@ public class GrpcClient : IGrpcClient, IDisposable
 {
   public IAiGrpcService AiApiService { get; }
   private readonly GrpcChannel _channel;
-  private readonly ILogger<GrpcClient> _logger;
 
-  public GrpcClient(IOptions<GrpcHostConfig> config, GrpcLoggingInterceptor grpcLoggingInterceptor)
+  public GrpcClient(GrpcChannel channel, GrpcClientLoggingInterceptor GrpcClientLoggingInterceptor)
   {
-    _channel = GrpcChannel.ForAddress(config.Value.ApiHost);
-    var invoker = _channel.Intercept(grpcLoggingInterceptor);
+    _channel = channel;
+    var invoker = _channel.Intercept(GrpcClientLoggingInterceptor);
     AiApiService = invoker.CreateGrpcService<IAiGrpcService>();
   }
 
