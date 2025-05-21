@@ -1,6 +1,6 @@
 using ProtoBuf;
 
-namespace Olympus.Application.Ai.Interactions.TalkWithGm;
+namespace Olympus.Application.Grpc.Ai.TalkWithGm;
 
 [ProtoContract]
 public sealed record TalkWithGmRequest : IRequest<TalkWithGmResponse>

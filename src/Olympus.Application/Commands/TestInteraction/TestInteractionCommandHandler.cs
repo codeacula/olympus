@@ -1,7 +1,7 @@
-using Olympus.Application.Ai.Interactions.TalkWithGm;
-using Olympus.Application.Common.Grpc;
+using Olympus.Application.Grpc;
+using Olympus.Application.Grpc.Ai.TalkWithGm;
 
-namespace Olympus.Application.Ai.Commands.TestInteraction;
+namespace Olympus.Application.Commands.TestInteraction;
 
 internal sealed class TestInteractionCommandHandler(IGrpcClient grpcClient) : IRequestHandler<TestInteractionCommand, TestInteractionResult>
 {

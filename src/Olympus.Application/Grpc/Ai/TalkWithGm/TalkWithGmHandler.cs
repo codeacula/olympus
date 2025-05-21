@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Olympus.Application.Grpc.Ai.TalkWithGm;
 
 namespace Olympus.Application.Ai.Interactions.TalkWithGm;
 

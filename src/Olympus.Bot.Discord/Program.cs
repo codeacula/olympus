@@ -2,7 +2,7 @@ using NetCord.Hosting.Gateway;
 using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
 using Olympus.Application;
-using Olympus.Application.Common.Grpc;
+using Olympus.Application.Grpc;
 using Olympus.Bot.Discord.Modules;
 
 var builder = Host.CreateApplicationBuilder(args);

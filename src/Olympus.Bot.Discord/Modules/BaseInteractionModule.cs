@@ -1,5 +1,5 @@
 using NetCord.Services.ApplicationCommands;
-using Olympus.Application.Common.Grpc;
+using Olympus.Application.Grpc;
 
 namespace Olympus.Bot.Discord.Modules;
 

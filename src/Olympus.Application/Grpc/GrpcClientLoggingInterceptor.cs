@@ -29,19 +29,16 @@ public sealed partial class GrpcClientLoggingInterceptor(ILoggerFactory loggerFa
 
   [LoggerMessage(
       Level = LogLevel.Information,
-      EventId = 0,
       Message = "Starting call. Host: {Host} Type/Method: {Type} / {Method}")]
   public static partial void LogStartingCall(ILogger logger, string host, string type, string method);
 
   [LoggerMessage(
       Level = LogLevel.Information,
-      EventId = 1,
       Message = "Call succeeded. Host: {Host} Type/Method: {Type} / {Method}. {@Response}")]
   public static partial void LogCallSucceeded(ILogger logger, string host, string type, string method, object response);
 
   [LoggerMessage(
       Level = LogLevel.Error,
-      EventId = 2,
       Message = "Call failed. Host: {Host} Type/Method: {Type} / {Method}")]
   public static partial void LogCallFailed(ILogger logger, string host, string type, string method, Exception incException);
 }

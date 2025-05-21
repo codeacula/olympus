@@ -33,19 +33,16 @@ public partial class ErrorHandlingBehavior<TRequest, TResponse>(ILogger<ErrorHan
 
   [LoggerMessage(
       Level = LogLevel.Warning,
-      EventId = 0,
       Message = "Validation failed for request {RequestName}: {Errors}")]
   private static partial void LogValidationError(ILogger logger, string requestName, IEnumerable<string> errors);
 
   [LoggerMessage(
       Level = LogLevel.Error,
-      EventId = 0,
       Message = "Unhandled exception occurred for request {RequestName}")]
   private static partial void LogUnhandledException(ILogger logger, string requestName, Exception ex);
 
   [LoggerMessage(
       Level = LogLevel.Warning,
-      EventId = 1,
       Message = "Resource not found for request {RequestName}")]
   private static partial void LogResourceNotFound(ILogger logger, string requestName, Exception ex);
 }

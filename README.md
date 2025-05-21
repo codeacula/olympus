@@ -18,14 +18,6 @@ Olympus is built using:
 
 ---
 
-## 🚀 MVP: AI Narrative Loop
-
-The initial MVP enables a single player to narrate actions via a Discord command. Olympus returns AI-generated narrative results based on short-term memory, chance, and character context.
-
-> See [`docs/mvp-plan.md`](docs/mvp-plan.md) and [`docs/stories.md`](docs/stories.md)
-
----
-
 ## 🛠️ Development
 
 - C#/.NET 9

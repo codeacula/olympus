@@ -1,6 +1,6 @@
 using NetCord.Services.ApplicationCommands;
-using Olympus.Application.Ai.Interactions.TalkWithGm;
-using Olympus.Application.Common.Grpc;
+using Olympus.Application.Grpc;
+using Olympus.Application.Grpc.Ai.TalkWithGm;
 
 namespace Olympus.Bot.Discord.Modules;
 
@@ -20,7 +20,6 @@ public partial class TestInteractionModule(
 
   [LoggerMessage(
       Level = LogLevel.Information,
-      EventId = 0,
       Message = "Test command executed with text: {InteractionText}")]
   public static partial void LogCommandExecuted(ILogger logger, string interactionText);
 }

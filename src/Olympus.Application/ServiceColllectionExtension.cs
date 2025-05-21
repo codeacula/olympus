@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Olympus.Application.Ai.Services;
 using Olympus.Application.Common.Behaviors;
 using Olympus.Application.Common.Grpc;
+using Olympus.Application.Grpc;
+using Olympus.Application.Grpc.Ai;
 using ProtoBuf.Grpc.Client;
 using ProtoBuf.Grpc.Server;
 
-using OlympusGrpcClient = Olympus.Application.Common.Grpc.GrpcClient;
+using OlympusGrpcClient = Olympus.Application.Grpc.GrpcClient;
 
 namespace Olympus.Application;
 

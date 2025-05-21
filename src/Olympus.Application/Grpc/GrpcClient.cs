@@ -1,9 +1,10 @@
 using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
-using Olympus.Application.Ai.Services;
+using Olympus.Application.Common.Grpc;
+using Olympus.Application.Grpc.Ai;
 using ProtoBuf.Grpc.Client;
 
-namespace Olympus.Application.Common.Grpc;
+namespace Olympus.Application.Grpc;
 
 public class GrpcClient : IGrpcClient, IDisposable
 {

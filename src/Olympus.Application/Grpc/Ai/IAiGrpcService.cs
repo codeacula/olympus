@@ -1,7 +1,7 @@
-using Olympus.Application.Ai.Interactions.TalkWithGm;
+using Olympus.Application.Grpc.Ai.TalkWithGm;
 using ProtoBuf.Grpc.Configuration;
 
-namespace Olympus.Application.Ai.Services;
+namespace Olympus.Application.Grpc.Ai;
 
 [Service]
 public interface IAiGrpcService

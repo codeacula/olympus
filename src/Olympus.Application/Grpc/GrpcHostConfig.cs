@@ -1,4 +1,4 @@
-namespace Olympus.Application.Common.Grpc;
+namespace Olympus.Application.Grpc;
 
 public sealed record GrpcHostConfig
 {

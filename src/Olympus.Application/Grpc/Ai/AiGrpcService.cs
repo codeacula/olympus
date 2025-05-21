@@ -1,6 +1,6 @@
-using Olympus.Application.Ai.Interactions.TalkWithGm;
+using Olympus.Application.Grpc.Ai.TalkWithGm;
 
-namespace Olympus.Application.Ai.Services;
+namespace Olympus.Application.Grpc.Ai;
 
 public class AiGrpcService(IMediator mediator) : IAiGrpcService
 {
