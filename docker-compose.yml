@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   olympus-api:
     build:
@@ -39,7 +38,7 @@ services:
   olympus-twitch:
     build:
       context: .
-      dockerfile: src/TwitchOlympus.Bot.Twitch/Dockerfile.dev
+      dockerfile: src/Olympus.Bot.Twitch/Dockerfile.dev
     env_file:
       - .env.development
     ports:
@@ -47,8 +46,8 @@ services:
     volumes:
       - .:/src:rw
     tmpfs:
-      - /src/src/TwitchOlympus.Bot.Twitch/bin:exec
-      - /src/src/TwitchOlympus.Bot.Twitch/obj:exec
+      - /src/src/Olympus.Bot.Twitch/bin:exec
+      - /src/src/Olympus.Bot.Twitch/obj:exec
     depends_on:
       - olympus-api
     networks:
@@ -81,6 +80,7 @@ services:
 volumes:
   db_data:
   redis_data:
+
 
 networks:
   backend:
