@@ -36,6 +36,8 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 
 app.AddOlympusServices();
 
+app.UseHttpsRedirection();
+
 app.Run();
 
 /// <summary>
