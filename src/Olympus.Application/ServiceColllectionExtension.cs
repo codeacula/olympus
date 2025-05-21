@@ -21,6 +21,8 @@ public static class ServiceCollectionExtension
     _ = services.AddGrpcCommonServices();
     return services;
   }
+
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA5359:Do Not Disable Certificate Validation", Justification = "Needed for development purposes")]
   private static IServiceCollection AddGrpcCommonServices(this IServiceCollection services)
   {
     _ = services.AddSingleton<IGrpcClient, OlympusGrpcClient>()
@@ -36,14 +38,20 @@ public static class ServiceCollectionExtension
       // Create channel options
       var channelOptions = new GrpcChannelOptions
       {
-        HttpHandler = new SocketsHttpHandler
+        LoggerFactory = loggerFactory
+      };
+
+      // Only configure SSL options when using HTTPS
+      if (options.UseHttps)
+      {
+        channelOptions.HttpHandler = new SocketsHttpHandler
         {
           SslOptions = new SslClientAuthenticationOptions
           {
-            RemoteCertificateValidationCallback = options.ValidateSslCertificate ? null : (_, _, _, _) => true,
+            RemoteCertificateValidationCallback = options.ValidateSslCertificate ? null : static (_, _, _, _) => true,
           },
-        },
-      };
+        };
+      }
 
       // Construct the appropriate URI based on config
       var scheme = options.UseHttps ? "https" : "http";

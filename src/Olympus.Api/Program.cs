@@ -1,10 +1,7 @@
-using System.Net.Security;
-using Grpc.Net.Client;
+
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using Olympus.Api;
 using Olympus.Application;
-using Olympus.Application.Common.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
