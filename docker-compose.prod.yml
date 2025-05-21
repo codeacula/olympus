@@ -1,0 +1,24 @@
+# docker-compose.prod.yml (override for production)
+services:
+  olympus-api:
+    build:
+      context: .
+      dockerfile: src/Olympus.Api/Dockerfile # use prod Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+    # Remove volumes and use the built image without mounting source
+    volumes: []
+  olympus-discord:
+    build:
+      context: .
+      dockerfile: src/Olympus.Bot.Discord/Dockerfile
+    environment:
+      DOTNET_ENVIRONMENT: "Production"
+    volumes: []
+  olympus-twitch:
+    build:
+      context: .
+      dockerfile: src/Olympus.Bot.Twitch/Dockerfile
+    environment:
+      DOTNET_ENVIRONMENT: "Production"
+    volumes: []

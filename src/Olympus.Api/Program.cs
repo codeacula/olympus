@@ -1,41 +1,52 @@
+using System.Net.Security;
+using Grpc.Net.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
+using Olympus.Api;
+using Olympus.Application;
+using Olympus.Application.Common.Grpc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+  c.SwaggerDoc("v1", new() { Title = "Olympus API", Version = "v1" });
+  c.EnableAnnotations();
+});
+
+builder.Services.AddHealthChecks()
+    .AddCheck<SelfHealthCheck>("OlympusApi");
+
+builder.Services
+  .AddOlympusServices()
+  .AddGrpcServerServices();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+_ = app.MapOpenApi();
+_ = app.UseSwagger();
+_ = app.UseSwaggerUI();
+
+app.UseHttpsRedirection();
+app.MapControllers();
+app.MapGet("/", () => "Welcome to Olympus API!");
+app.MapHealthChecks("/health", new HealthCheckOptions
 {
-  _ = app.MapOpenApi();
-}
+  Predicate = _ => true, // Include all checks
+});
+
+app.AddOlympusServices();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-  var forecast = Enumerable.Range(1, 5).Select(index =>
-      new WeatherForecast
-      (
-          DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-          Random.Shared.Next(-20, 55),
-          summaries[Random.Shared.Next(summaries.Length)]
-      ))
-      .ToArray();
-  return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-  public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+/// <summary>
+/// Program class made public and partial to enable integration testing with WebApplicationFactory
+/// </summary>
+public partial class Program;

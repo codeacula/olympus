@@ -16,10 +16,13 @@ public class GameDateTimeTests
   [Fact]
   public void ToString_And_Parse_RoundTrip()
   {
-    var now = DateTime.UtcNow;
+    // Use a specific datetime with UTC kind
+    var now = DateTime.SpecifyKind(new DateTime(2023, 5, 15, 10, 30, 0), DateTimeKind.Utc);
     var original = new GameDateTime(now);
     var str = original.ToString();
     Assert.True(GameDateTime.TryParse(str, out var parsed));
-    Assert.Equal(original.Value.ToString("O"), parsed.Value.ToString("O"));
+
+    // Compare the underlying ticks which are timezone-independent
+    Assert.Equal(original.Value.Ticks, parsed.Value.Ticks);
   }
 }

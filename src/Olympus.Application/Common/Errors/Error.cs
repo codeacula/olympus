@@ -1,6 +1,0 @@
-namespace Olympus.Application.Common.Errors;
-
-/// <summary>
-/// Base record for representing errors in the application layer.
-/// </summary>
-public abstract record class Error(string Message);

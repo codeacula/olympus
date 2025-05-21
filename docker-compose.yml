@@ -1,0 +1,87 @@
+services:
+  olympus-api:
+    build:
+      context: .
+      dockerfile: src/Olympus.Api/Dockerfile.dev
+    ports:
+      - "5034:5034"
+      - "7101:7101"
+    env_file:
+      - .env.development
+    volumes:
+      - .:/src:rw
+    tmpfs:
+      - /src/src/Olympus.Api/bin:exec
+      - /src/src/Olympus.Api/obj:exec
+    depends_on:
+      - db
+      - redis
+    networks:
+      - backend
+
+  olympus-discord:
+    build:
+      context: .
+      dockerfile: src/Olympus.Bot.Discord/Dockerfile.dev
+    env_file:
+      - .env.development
+    volumes:
+      - .:/src:rw
+    ports:
+      - "4027:4026"
+    tmpfs:
+      - /src/src/Olympus.Bot.Discord/bin:exec
+      - /src/src/Olympus.Bot.Discord/obj:exec
+    networks:
+      - backend
+
+  olympus-twitch:
+    build:
+      context: .
+      dockerfile: src/Olympus.Bot.Twitch/Dockerfile.dev
+    env_file:
+      - .env.development
+    ports:
+      - "4028:4026"
+    volumes:
+      - .:/src:rw
+    tmpfs:
+      - /src/src/Olympus.Bot.Twitch/bin:exec
+      - /src/src/Olympus.Bot.Twitch/obj:exec
+    depends_on:
+      - olympus-api
+    networks:
+      - backend
+
+  db:
+    image: postgres:15-alpine
+    container_name: olympus-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: olympus
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+  redis:
+    image: redis:7-alpine
+    container_name: olympus-redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+volumes:
+  db_data:
+  redis_data:
+
+
+networks:
+  backend:
+    driver: bridge

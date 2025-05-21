@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-Olympus.Bot.Discord-2036b587-a2d0-426e-9e6b-70ee8b70d0f9</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+    <PackageReference Include="NetCord" Version="1.0.0-alpha.367" />
+    <PackageReference Include="NetCord.Hosting" Version="1.0.0-alpha.367" />
+    <PackageReference Include="NetCord.Hosting.AspNetCore" Version="1.0.0-alpha.367" />
+    <PackageReference Include="NetCord.Hosting.Services" Version="1.0.0-alpha.367" />
+    <PackageReference Include="NetCord.Services" Version="1.0.0-alpha.367" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Olympus.Application\Olympus.Application.csproj" />
+  </ItemGroup>
+</Project>

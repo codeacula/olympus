@@ -31,9 +31,7 @@ artifacts/
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
-# NuGet Packages
 *.nupkg
-# NuGet Symbol Packages
 *.snupkg
 
 # Others
@@ -52,3 +50,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+.env
+.env.development
+%USER_PROFILE%

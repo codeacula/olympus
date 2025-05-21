@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\clients\Olympus.Bot.Discord\Olympus.Bot.Discord.csproj" />
+    <ProjectReference Include="..\..\..\src\Olympus.Bot.Discord\Olympus.Bot.Discord.csproj" />
   </ItemGroup>
 
 </Project>
