@@ -15,7 +15,7 @@
 **/charts
 **/docker-compose*
 **/compose*
-**/Dockerfile*
+# Exclude specific Dockerfiles only if necessary, but do not exclude all Dockerfiles
 **/node_modules
 **/npm-debug.log
 **/obj
