@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Olympus.Api;
 using Olympus.Application;
+using Olympus.Infrastructure.Ai;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,8 @@ builder.Services.AddHealthChecks()
 
 builder.Services
   .AddOlympusServices()
-  .AddGrpcServerServices();
+  .AddGrpcServerServices()
+  .AddAiServices(builder.Configuration);
 
 var app = builder.Build();
 

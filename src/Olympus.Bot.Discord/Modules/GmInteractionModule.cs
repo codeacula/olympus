@@ -12,10 +12,19 @@ public partial class GmInteractionModule(
   [SlashCommand("greet", "Greet the GM")]
   public async Task<string> GreetAsync(string interactionText)
   {
-    var request = new TalkWithGmRequest(interactionText);
-    var response = await GrpcClient.AiApiService.TalkWithGmAsync(request);
-
-    return response is null ? HandleFailure("Unknown error occurred") : response.Response;
+    try
+    {
+      return await ExecuteAsync<TalkWithGmRequest, TalkWithGmResponse>(async () =>
+      {
+        var request = new TalkWithGmRequest(interactionText);
+        var response = await GrpcClient.AiApiService.TalkWithGmAsync(request);
+        return response;
+      });
+    }
+    catch (Exception ex)
+    {
+      return HandleFailure("An error occurred");
+    }
   }
 
   [LoggerMessage(

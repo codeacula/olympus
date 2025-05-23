@@ -16,5 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Olympus.Application\Olympus.Application.csproj" />
+    <ProjectReference Include="..\Olympus.Infrastructure\Olympus.Infrastructure.Ai\Olympus.Infrastructure.Ai.csproj" />
   </ItemGroup>
 </Project>

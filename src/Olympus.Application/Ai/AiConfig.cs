@@ -1,4 +1,4 @@
-namespace Olympus.Application.Ai.Config;
+namespace Olympus.Application.Ai;
 
 public sealed record AiConfig
 {

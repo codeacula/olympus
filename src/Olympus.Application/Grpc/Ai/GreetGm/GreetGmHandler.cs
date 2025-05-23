@@ -1,12 +1,12 @@
 using Microsoft.Extensions.Logging;
-using Olympus.Application.Ai.Interfaces;
+using Olympus.Application.Ai;
 
 namespace Olympus.Application.Grpc.Ai.GreetGm;
 
-internal sealed partial class GreetGmHandler(ILogger<GreetGmHandler> logger, ITheOrb theOrb) : IRequestHandler<GreetGmRequest, GreetGmResponse>
+internal sealed partial class GreetGmHandler(ILogger<GreetGmHandler> logger, IOrb theOrb) : IRequestHandler<GreetGmRequest, GreetGmResponse>
 {
   private readonly ILogger<GreetGmHandler> _logger = logger;
-  private readonly ITheOrb _theOrb = theOrb;
+  private readonly IOrb _theOrb = theOrb;
 
   public async Task<GreetGmResponse> Handle(GreetGmRequest request, CancellationToken cancellationToken)
   {
