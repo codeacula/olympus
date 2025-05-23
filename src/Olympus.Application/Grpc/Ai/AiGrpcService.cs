@@ -1,3 +1,4 @@
+using Olympus.Application.Ai.TalkWithGm;
 using Olympus.Application.Grpc.Ai.TalkWithGm;
 
 namespace Olympus.Application.Grpc.Ai;
@@ -9,7 +10,9 @@ public class AiGrpcService(IMediator mediator) : IAiGrpcService
     ArgumentNullException.ThrowIfNull(request);
 
     var command = new TalkWithGmCommand(request.InteractionText);
-    var response = new TalkWithGmResponse((await mediator.Send(command, cancellationToken)).Response);
+
+    var result = await mediator.Send(command, cancellationToken);
+    var response = new TalkWithGmResponse(result.Message!);
 
     return response ?? throw new OlympusInvalidResponseException();
   }

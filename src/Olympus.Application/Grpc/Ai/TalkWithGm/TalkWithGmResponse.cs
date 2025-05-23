@@ -4,7 +4,7 @@ namespace Olympus.Application.Grpc.Ai.TalkWithGm;
 public sealed record TalkWithGmResponse
 {
   [ProtoMember(1)]
-  public string Response { get; init; } = string.Empty;
+  public required string Response { get; init; }
 
   public TalkWithGmResponse() { }
 

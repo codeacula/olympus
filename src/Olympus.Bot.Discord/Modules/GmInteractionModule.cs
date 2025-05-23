@@ -14,9 +14,7 @@ public class GmInteractionModule(
   {
     return await ExecuteAsync<TalkWithGmRequest, TalkWithGmResponse>(async () =>
     {
-      var request = new TalkWithGmRequest(interactionText);
-      var response = await GrpcClient.AiApiService.TalkWithGmAsync(request);
-      return response.Response;
+
     });
   }
 }

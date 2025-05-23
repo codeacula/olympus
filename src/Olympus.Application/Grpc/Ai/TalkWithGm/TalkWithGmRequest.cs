@@ -1,10 +1,10 @@
 namespace Olympus.Application.Grpc.Ai.TalkWithGm;
 
 [ProtoContract]
-public sealed record TalkWithGmRequest : IRequest<TalkWithGmResponse>
+public sealed record TalkWithGmRequest
 {
   [ProtoMember(1)]
-  public string InteractionText { get; init; } = string.Empty;
+  public required string InteractionText { get; init; }
 
   public TalkWithGmRequest() { }
 
