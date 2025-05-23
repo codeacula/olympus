@@ -2,6 +2,7 @@ namespace Olympus.Application.Grpc;
 
 public sealed record GrpcHostConfig
 {
+  public required string ApiToken { get; init; }
   public required string Host { get; init; }
   public required int Port { get; init; }
   public bool UseHttps { get; init; } = true;

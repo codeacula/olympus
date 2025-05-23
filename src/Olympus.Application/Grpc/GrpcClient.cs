@@ -11,10 +11,15 @@ public class GrpcClient : IGrpcClient, IDisposable
   public IAiGrpcService AiApiService { get; }
   private readonly GrpcChannel _channel;
 
-  public GrpcClient(GrpcChannel channel, GrpcClientLoggingInterceptor GrpcClientLoggingInterceptor)
+  public GrpcClient(GrpcChannel channel, GrpcClientLoggingInterceptor GrpcClientLoggingInterceptor, GrpcHostConfig grpcHostConfig)
   {
     _channel = channel;
-    var invoker = _channel.Intercept(GrpcClientLoggingInterceptor);
+    var invoker = _channel.Intercept(GrpcClientLoggingInterceptor)
+      .Intercept(metadata =>
+      {
+        metadata.Add("X-API-Token", grpcHostConfig.ApiToken);
+        return metadata;
+      });
     AiApiService = invoker.CreateGrpcService<IAiGrpcService>();
   }
 

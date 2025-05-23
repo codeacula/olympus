@@ -9,9 +9,7 @@ public class AiGrpcService(IMediator mediator) : IAiGrpcService
     ArgumentNullException.ThrowIfNull(request);
 
     var command = new TalkWithGmCommand(request.InteractionText);
-    var result = await mediator.Send(command, cancellationToken);
-
-    var response = new TalkWithGmResponse(result.Response);
+    var response = new TalkWithGmResponse((await mediator.Send(command, cancellationToken)).Response);
 
     return response ?? throw new OlympusInvalidResponseException();
   }
