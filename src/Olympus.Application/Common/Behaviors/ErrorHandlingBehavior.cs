@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Olympus.Application.Common.Behaviors;
 
-public partial class ErrorHandlingBehavior<TRequest, TResponse>(ILogger<ErrorHandlingBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse>
+public class ErrorHandlingBehavior<TRequest, TResponse>(ILogger<ErrorHandlingBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
   private readonly ILogger<ErrorHandlingBehavior<TRequest, TResponse>> _logger = logger;
@@ -13,36 +13,35 @@ public partial class ErrorHandlingBehavior<TRequest, TResponse>(ILogger<ErrorHan
     {
       return await next(cancellationToken);
     }
+    catch (OlympusAiException ex)
+    {
+      OlympusApplicationLogger.LogAiException(_logger, typeof(TRequest), ex);
+      throw;
+    }
+    catch (OlympusInvalidResponseException ex)
+    {
+      OlympusApplicationLogger.LogInvalidResponse(_logger, typeof(TRequest), ex);
+      throw;
+    }
+    catch (OlympusUnauthorizedAccessException ex)
+    {
+      OlympusApplicationLogger.LogAuthenticationError(_logger, typeof(TRequest), ex);
+      throw;
+    }
     catch (OlympusValidationException ex)
     {
-      LogValidationError(_logger, typeof(TRequest).Name, ex.Errors.Select(e => e.Value.Aggregate((a, b) => $"{a}, {b}")));
-      throw; // Re-throw for gRPC layer to handle
+      OlympusApplicationLogger.LogValidationError(_logger, typeof(TRequest), ex.Errors.Select(e => e.Value.Aggregate((a, b) => $"{a}, {b}")));
+      throw;
     }
     catch (OlympusNotFoundException ex)
     {
-      LogResourceNotFound(_logger, typeof(TRequest).Name, ex);
-      throw; // Re-throw
+      OlympusApplicationLogger.LogResourceNotFound(_logger, typeof(TRequest), ex);
+      throw;
     }
-    // Add catches for other specific Olympus exceptions if you want special logging
     catch (Exception ex)
     {
-      LogUnhandledException(_logger, typeof(TRequest).Name, ex);
-      throw; // Re-throw for gRPC layer to handle as a generic error
+      OlympusApplicationLogger.LogUnhandledException(_logger, typeof(TRequest), ex);
+      throw;
     }
   }
-
-  [LoggerMessage(
-      Level = LogLevel.Warning,
-      Message = "Validation failed for request {RequestName}: {Errors}")]
-  private static partial void LogValidationError(ILogger logger, string requestName, IEnumerable<string> errors);
-
-  [LoggerMessage(
-      Level = LogLevel.Error,
-      Message = "Unhandled exception occurred for request {RequestName}")]
-  private static partial void LogUnhandledException(ILogger logger, string requestName, Exception ex);
-
-  [LoggerMessage(
-      Level = LogLevel.Warning,
-      Message = "Resource not found for request {RequestName}")]
-  private static partial void LogResourceNotFound(ILogger logger, string requestName, Exception ex);
 }

@@ -1,20 +1,18 @@
 using NetCord.Services.ApplicationCommands;
+using Olympus.Application.Ai.Interactions.TalkWithGm;
 using Olympus.Application.Grpc;
-using Olympus.Application.Grpc.Ai.TalkWithGm;
 
 namespace Olympus.Bot.Discord.Modules;
 
-public class GmInteractionModule(
-    IGrpcClient grpcClient,
-    ILogger<GmInteractionModule> logger
-  ) : BaseInteractionModule<GmInteractionModule>(grpcClient, logger)
+public class GmInteractionModule(IGrpcClient grpcClient) : ApplicationCommandModule<ApplicationCommandContext>
 {
-  [SlashCommand("greet", "Greet the GM")]
-  public async Task<string> GreetAsync(string interactionText)
-  {
-    return await ExecuteAsync<TalkWithGmRequest, TalkWithGmResponse>(async () =>
-    {
+  private readonly IGrpcClient _grpcClient = grpcClient;
 
-    });
+  [SlashCommand("talk", "Talk with the GM")]
+  public async Task<string> TalkWithGmAsync(string interactionText)
+  {
+    var grcpRequest = new TalkWithGmRequest { Value = interactionText };
+    var response = await _grpcClient.AiApiService.TalkWithGmAsync(grcpRequest);
+    return response.Value;
   }
 }

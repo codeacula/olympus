@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Olympus.Application.Ai;
+using Olympus.Application.Ai.Interfaces;
 
 namespace Olympus.Infrastructure.Ai;
 

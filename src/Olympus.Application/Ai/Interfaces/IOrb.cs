@@ -1,6 +1,6 @@
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace Olympus.Application.Ai;
+namespace Olympus.Application.Ai.Interfaces;
 
 public interface IOrb
 {

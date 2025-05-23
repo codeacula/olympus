@@ -1,7 +1,7 @@
 using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
+using Olympus.Application.Ai.Interfaces;
 using Olympus.Application.Common.Grpc;
-using Olympus.Application.Grpc.Ai;
 using ProtoBuf.Grpc.Client;
 
 namespace Olympus.Application.Grpc;

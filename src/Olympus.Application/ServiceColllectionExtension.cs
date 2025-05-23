@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Olympus.Application.Ai.Services;
 using Olympus.Application.Common.Behaviors;
 using Olympus.Application.Common.Grpc;
 using Olympus.Application.Grpc;
-using Olympus.Application.Grpc.Ai;
 using ProtoBuf.Grpc.Client;
 using ProtoBuf.Grpc.Server;
 
@@ -81,11 +81,11 @@ public static class ServiceCollectionExtension
 
   public static IServiceCollection AddOlympusServices(this IServiceCollection services)
   {
-    _ = services.AddGrpcCommonServices();
     _ = services.AddMediatR(cfg => cfg
-        .RegisterServicesFromAssemblyContaining<OlympusGrpcClient>()
-        .AddOpenBehavior(typeof(ValidationBehavior<,>))
-        .AddOpenBehavior(typeof(ErrorHandlingBehavior<,>))
+      .RegisterServicesFromAssemblyContaining<IOlympusApplication>()
+      .AddOpenBehavior(typeof(ValidationBehavior<,>))
+      .AddOpenBehavior(typeof(ErrorHandlingBehavior<,>))
+      .AddOpenBehavior(typeof(RequestLoggingBehavior<,>))
     );
     return services;
   }

@@ -4,6 +4,7 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Olympus.Application.Ai;
+using Olympus.Application.Ai.Interfaces;
 using Olympus.Application.Common.Exceptions;
 
 namespace Olympus.Infrastructure.Ai;

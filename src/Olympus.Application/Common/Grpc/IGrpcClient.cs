@@ -1,4 +1,4 @@
-using Olympus.Application.Grpc.Ai;
+using Olympus.Application.Ai.Interfaces;
 
 namespace Olympus.Application.Grpc;
 

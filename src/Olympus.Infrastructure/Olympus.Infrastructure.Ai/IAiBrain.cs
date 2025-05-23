@@ -1,4 +1,4 @@
-using Olympus.Application.Ai;
+using Olympus.Application.Ai.Interfaces;
 
 namespace Olympus.Infrastructure.Ai;
 

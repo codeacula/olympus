@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Olympus.Application.Ai;
+using Olympus.Application.Ai.Interfaces;
 
 namespace Olympus.Infrastructure.Ai;
 

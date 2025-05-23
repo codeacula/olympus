@@ -4,11 +4,8 @@ using NetCord.Hosting.Services.ApplicationCommands;
 using Olympus.Application;
 using Olympus.Application.Grpc;
 using Olympus.Bot.Discord;
-using Olympus.Bot.Discord.Modules;
 
 var builder = Host.CreateApplicationBuilder(args);
-
-builder.Services.AddLogging(cfg => cfg.AddFilter("Grpc", LogLevel.Debug));
 
 var grpcSection = builder.Configuration.GetSection(nameof(GrpcHostConfig)) ?? throw new InvalidOperationException(
     "The configuration section for GrpcHostConfig is missing."
@@ -24,16 +21,14 @@ Console.WriteLine(
 );
 
 builder.Services
+  .AddOlympusServices()
   .AddGrpcClientServices()
   .AddDiscordGateway()
-  .AddApplicationCommands()
-  .AddMediatR(cfg => cfg
-    .RegisterServicesFromAssemblyContaining<IDiscordMarker>()
-  );
+  .AddApplicationCommands();
 
 var host = builder.Build();
 
-host.AddModules(typeof(BaseInteractionModule<>).Assembly);
+host.AddModules(typeof(IOlympusDiscordBot).Assembly);
 host.UseGatewayEventHandlers();
 
 await host.RunAsync();
